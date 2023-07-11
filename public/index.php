@@ -1,0 +1,31 @@
+<?php
+
+    session_start();
+
+    ini_set("error_reporting", E_ALL);
+    ini_set("display_errors",1);
+    ini_set("display_startup_errors",1);
+
+    require_once("../vendor/autoload.php");
+    
+    $route = new \App\Routes;
+
+    /* 
+    echo "<pre>";
+    var_dump($route->getUrl());
+    echo "<pre>";
+
+    echo "<hr />";
+
+    echo "<pre>";
+    var_dump($route->getRoutes());
+    echo "<pre />";
+    */
+
+
+
+
+
+
+
+?>

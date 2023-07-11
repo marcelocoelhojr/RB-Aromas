@@ -1,0 +1,41 @@
+<title>Meus dados</title>
+<div class="container">
+    <h3>Meus dados</h3>
+    <hr class="mt-3">
+    <?php 
+        foreach($this->dados as $valor){ ?>
+            <div>
+                <h6>Nome: <?= $valor->NOME; ?></h6>
+            </div>
+            <div>
+                <h6>E-mail: <?= $valor->EMAIL; ?></h6>
+            </div>
+            <div>
+                <h6>Telefone: <?= $valor->TELEFONE; ?></h6>
+            </div>
+            <div>
+                <h6>CPF: <?= $valor->CPF; ?></h6>
+            </div>
+            <div>
+                <h6>RG: <?= $valor->RG; ?></h6>
+            </div>
+            <div>
+                <h6>CEP: <?= $valor->CEP; ?></h6>
+            </div>
+            <div>
+                <h6>Endereço: <?= $valor->ENDERECO; ?></h6>
+            </div>
+            <div>
+                <h6>Cidade: <?= $valor->CIDADE; ?></h6>
+            </div>
+            <div>
+                <h6>UF: <?= $valor->UF; ?></h6>
+            </div>
+            <div>
+                <h6>Número: <?= $valor->NUM_CASA; ?></h6>
+            </div>
+            <div class="mt-5">
+                <a href="/restrito" class="btn btn-outline-danger col-1">Voltar</a>
+            </div>
+<?php   } ?>
+</div>

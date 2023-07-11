@@ -1,0 +1,94 @@
+<title>Finalizar Compra</title>
+
+<div class="container">
+    <h3>Finalizar Compra</h3>
+    <hr class="mt-3">
+
+    <ul class="list-group mb-3">
+        <?php 
+            if(count($_SESSION['kart']) == 0){ ?>
+        <div class="d-flex justify-content-center align-items-center" style="height: 300px;">
+            <h1 class="text-muted d-flex" disabled>
+                Vazio
+            </h1>
+        </div>
+        <?php }
+            else{ ?>
+
+        <?php    $i = 0;
+                        $total = 0;
+                        $count = count($this->dados); 
+                        $listaProdutos = array();
+                        for($i; $i < $count; $i++){ 
+                            foreach($this->dados[$i] as $valor){
+                                $id = $valor->CodProduto;
+                                if(!isset($_SESSION['count'][$id])){
+                                    $_SESSION['count'][$id] = 1;
+                                }
+                                $qtd = intval($_SESSION['count'][$id]);
+                                $total = $total + ($valor->Preco) * $qtd;
+                                if($valor->EstoqueQtd < $qtd){
+                                    $_SESSION['count'][$id] = $valor->EstoqueQtd;
+                                }
+                                if(!isset($_SESSION['produtos'])){
+                                    $_SESSION['produtos'] = array();
+                                    $_SESSION['qtd'] = array();
+                                }
+                                else{
+                                    $_SESSION['produtos'][$i] = $valor->CodProduto; //guardando os produtos para inserir no pedidos
+                                    $_SESSION['qtd'][$i] = $qtd; //guardando as qtd para inserir no pedidos
+                                }
+                            ?>
+
+        <li class="list-group-item py-3">
+            <div class="row g-3">
+                <div class="col-4 col-md-3 col-lg-2">
+                    <a href="#">
+                        <img src="Img/Produtos/<?= $valor->Imagem ?>" class="img-thumbnail">
+                    </a>
+                </div>
+                <div class="col-8 col-md-9 col-lg-7 col-xl-7 text-left align-self-center">
+                    <h4>
+                        <b>
+                            <a href="#" class="text-decoration-none text-danger">
+                                <?= $valor->Nome ?>
+                            </a>
+                        </b>
+                    </h4>
+                    <h4>
+                        <small><?= $valor->Descricao ?></small>
+                    </h4>
+                </div>
+                <div
+                    class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-8 col-lg-3 offset-lg-0  col-lx-2 align-self-center mt-3">
+                    <div class="">
+                        <h6>Quantidade: <?= $_SESSION['count'][$id] ?></h6><br>
+                        <span class="text-dark">Preco: R$ <?= $valor->Preco ?></span>
+                    </div>
+                </div>
+            </div>
+        </li>
+        <?php } ?>
+        <?php } ?>
+        <?php } ?>
+    </ul>
+    <div class="">
+        <h4>Total: R$ <?=  $_SESSION['total'] ?></h4>
+    </div>
+    <div class="mt-5">
+        <form action="/execFinalizar" method="POST">
+            <button type="submit" class="btn btn-success">Finalizar</button>
+            <input type="hidden" value="<?= $i ?>" name="tamanho">
+            <a href="/carrinho" class="btn btn-danger ml-2">Cancelar</a>
+        </form>
+    </div>
+
+    <div class="mt-5">
+        <img src="Img/Icon/Master-Card-icon.png" alt="mastercard">
+        <img src="Img/Icon/Visa-icon.png" alt="mastercard">
+        <img src="Img/Icon/Paypal-icon.png" alt="mastercard">
+    </div>
+</div>
+<?php
+     unset($_SESSION['kart']);
+?>

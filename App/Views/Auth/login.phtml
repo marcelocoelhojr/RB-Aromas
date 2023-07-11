@@ -1,0 +1,33 @@
+<title>Logar</title>
+<div class="container">
+    <div class="d-flex justify-content-center mb-5">
+        <form class="form-signin border p-4 bg-light shadow-lg mt-5 mb-5" method="post" action="/execAutenticar">
+            <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+            <hr class="mt-3">
+            <?php
+        if (isset($_SESSION['msg'])) {
+            echo $_SESSION['msg'];
+            unset($_SESSION['msg']);
+        }
+        if (!isset($this->dados['formRetorno'])){
+            $cpf = "";
+        }else {
+            extract($this->dados['formRetorno']);
+        }
+        ?>
+            <div>
+                <label for="iCpf" class="text-muted">CPF</label>
+                <input type="text" class="form-control mb-3" name="cpf" id="iCpf" value="<?= $cpf; ?>"
+                    placeholder="Digite seu usuário" required autofocus>
+            </div>
+            <div class="text-muted">
+                <label for="iSenha">Senha</label>
+                <input type="password" class="form-control mb-3" name="senha" id="iSenha" placeholder="Digite sua senha"
+                    required>
+            </div>
+            <button class="btn btn-lg btn-dark btn-block" name="sendLogin" type="submit">Logar</button>
+            <p class="mt-2">não tem cadastro? <a href="/cadastro">cadastra-se</a></p>
+        </form>
+    </div>
+    <div class="mb-5"></div>
+</div>

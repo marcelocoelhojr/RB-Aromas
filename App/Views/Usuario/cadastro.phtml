@@ -1,0 +1,145 @@
+<title>Cadastro</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+		<script type="text/javascript">
+			$("#telefone, #celular").mask("(00) 0000-00000");
+			$("#cpf").mask("000.000.000-00");
+			$("#rg").mask("0.000.000");
+			$("#cep").mask("00.000-000");
+		</script>
+<?php 
+  if(isset($_SESSION['msg'])){
+    echo $_SESSION['msg'];
+    unset($_SESSION['msg']);
+  }
+
+  if(!isset($this->dados['formRetorno'])){
+      $nome = $email = $cpf = $tel = $endereco = $cidade = $uf = $numero = $sexo = $cep = "";
+  }
+  else{
+    extract($this->dados['formRetorno']);
+  }
+
+?>
+<div class="container">
+    <h4 class="mb-3">Informações pessoais</h4>
+    <hr>
+    <div>
+        <form name="form1" action="/registrarusuario" method="POST">
+            <div class="col-12">
+                <label class="form-label">Nome</label>
+                <input type="text" class="form-control" placeholder="Digite seu nome"  name="nome" value="<?= $nome;?>" id="nome" required>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 col-sm-6">
+                    <label class="form-label">CPF</label>
+                    <input  type="text" class="form-control" placeholder="Digite seu CPF" name="cpf" value="<?= $cpf;?>" id="cpf" required>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label class="form-label">RG<span class="text-muted pl-1">(opcional)<span></label>
+                    <input type="text" class="form-control" id="rg" placeholder="Digite seu RG" name="rg">
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 col-sm-6">
+                    <label class="form-label">Senha</label>
+                    <input type="password" class="form-control" placeholder="Senha" name="senha"   required>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <label class="form-label">Confirmar Senha</label>
+                    <input type="password" class="form-control"  placeholder="Senha" placeholder="Confirmar Senha" name="confirmarSenha"  id="confirmarSenha" required>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 col-sm-6">
+                    <label class="form-label">E-mail</label>
+                    <input type="email" class="form-control" placeholder="Digite seu E-mail" id="email" name="email" value="<?= $email;?>" required>
+                </div>
+                <div class="col-md-6 col-sm-6 row">
+                    <div class="col-md-6 col-sm-6">
+                        <label class="form-label">Nascimento</label>
+                        <input type="date" class="form-control" name="data">
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <label class="form-label">Sexo</label>
+                        <select class="form-select" aria-label="Default select example" value="<?= $sexo;?>" id="sexo" name="sexo">
+                            <option value="1">Masculino</option>
+                            <option value="2">Feminino</option>
+                            <option value="3">Outros</option>
+                            <option value="4">Prefiro não informar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-3 row">
+                    <div class="col-md-3">
+                        <label class="input-control">Telefone</label>
+                        <input type="text" class="telefone form-control" id="telefone" placeholder="Digite seu telefone" name="tel">
+                    </div>
+                    <div class="col-md-3">
+                        <label>CEP</label>
+                        <input type="text" class="form-control" id="cep" value="<?= $cep;?>" placeholder="Digite seu CEP" name="cep">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Endereço</label>
+                        <input type="text" class="form-control" name="endereco" id="endereco" value="<?= $endereco;?>" placeholder="Digite seu endereço">
+                    </div>
+                </div>
+                <div class="mt-3 row">
+                    <div class="col-md-6">
+                        <label for="cidade">Cidade</label>
+                        <input type="text" class="form-control" name="cidade" id="cidade" value="<?= $cidade;?>" placeholder="Cidade">
+                    </div>
+                    <div class="col-md-1">
+                        <label>Número</label>
+                        <input type="text" class="form-control" name="numero" id="numero" value="<?= $numero;?>" placeholder="N°">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="inputUF" class="">UF</label>
+                        <select name="uf" id="inputUF" class="form-select" value="<?= $uf;?>" aria-placeholder="UF">
+                            <option selected>AC</option>
+                            <option >AL</option>
+                            <option >AP</option>
+                            <option >AM</option>
+                            <option >BA</option>
+                            <option >AP</option>
+                            <option >CE</option>
+                            <option >DF</option>
+                            <option >ES</option>
+                            <option >GO</option>
+                            <option >MA</option>
+                            <option >MT</option>
+                            <option >MS</option>
+                            <option >MG</option>
+                            <option >PA</option>
+                            <option >PB</option>
+                            <option >PR</option>
+                            <option >PE</option>
+                            <option >PI</option>
+                            <option >RJ</option>
+                            <option >RN</option>
+                            <option >RS</option>
+                            <option >RO</option>
+                            <option >RR</option>
+                            <option >SC</option>
+                            <option >SE</option>
+                            <option >TO</option>
+                            <option >SP</option>
+                        </select>    
+                    </div>
+                </div>
+                
+                <div class="mt-4 row ">
+                    <div class="form-check mb-3 ml-3">
+                        <input type="checkbox" required class="form-check-input" id="Aceitar os termos">
+                        <label for="Aceitar os termos" class="form-check-label form-check-sm">Concordo com os <a href="/termos">termos</a> e
+                        condições</label>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-dark mb-3">Cadastrar</button><br>
+                        <label class="form-label mb-3">Já tem um cadastro? <a href="/autenticar">entrar</a>.</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

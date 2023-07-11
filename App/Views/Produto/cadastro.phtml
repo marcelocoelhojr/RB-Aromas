@@ -1,0 +1,56 @@
+    <?php 
+
+    if(isset($_SESSION['msg'])){
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+
+    if(!isset($this->dados['formRetorno'])){
+        $nome = $email = $cpf = $tel = $endereco = $cidade = $uf = $numero = "";
+    }
+    else{
+        extract($this->dados['formRetorno']);
+    }
+
+    ?>
+    <title>Cadastro do produto</title>
+    <div class="container">
+        <h1>Cadastro do Produto</h1>
+        <hr>
+        <form name="form1" action="/registrarproduto" method="POST">
+            <div class="mb-3 Required">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" value="" id="nome" required class="form-control mb-4" placeholder="Nome do produto">
+            </div>
+            <div class="form-group col-md-1.5">
+                <label for="inputUF">Categoria</label>
+                <select name="categoria" id="inputUF" class="form-control mb-4" aria-placeholder="UF">
+                    <option selected>Categoria1</option>
+                    <option selected>Categoria2</option>
+                    <option selected>Categoria3</option>
+                </select>
+            </div>
+            <div class="form-group Required">
+                <label for="descricao">Descrição</label>
+                <textarea name="descricao" id="descricao" Required class="form-control mb-5" placeholder="Insira a descrição do produto"></textarea>
+            </div>
+            <div class="form-group Required">
+                <label for="imagemProduto">Imagem do Produto</label>
+                <input type="file" name="img" requered class="form-control-file mb-5" id="imagemProduto" require>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2 Required">
+                    <label for="EstoqueQtd">Quantidade Estoque</label>
+                    <input type="text" name="EstoqueQtd" value="" id="EstoqueQtd" required class="form-control" placeholder="Quantidade">
+                </div>
+                <div class="form-group col-md-2 Required">
+                    <label for="preco">Preço</label>
+                    <input type="text" name="preco" value="" id="preco" required class="form-control mb-5" placeholder="R$ 00,00">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark mb-5 form-group">Cadastrar Produto</button>
+            <a href="restritoadmin"><button id="voltar" type="button" class="btn btn-dark form-group mb-5">Voltar</button></a>
+            <input name="aux" type="hidden" value="insert">
+            <input name="id" type="hidden" value="0">
+        </form>
+    </div>

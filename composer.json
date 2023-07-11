@@ -1,0 +1,21 @@
+{
+    "name": "rbaromas/mvc",
+    "description": "mvc completo",
+    "authors": [
+        {
+            "name": "Marcelo Coelho Amorim Junior",
+            "email": "macj.10@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "files": ["App/helper.php"],
+        "psr-4": {
+            "App\\": "App/",
+            "Config\\": "vendor/Config/"
+        }
+    }
+}

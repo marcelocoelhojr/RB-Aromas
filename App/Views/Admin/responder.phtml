@@ -1,0 +1,15 @@
+<?php
+        foreach($this->dados as $valor){?>
+        <div>
+          <h6>Nome: <?= $valor->Nome ?></h6>  
+          <h6>E-mail: <?= $valor->Email ?></h6> 
+          <h6>Mensagem: <?= $valor->Mensagem ?></h6>
+        </div>
+        <hr />
+        <div>
+            <div class="form-group Required">
+                <label for="respsota">Resposta</label>
+                <textarea name="respsota" id="respsota" Required class="form-control mb-5" placeholder="inserir respsota..."></textarea>
+            </div>
+        </div>
+<?php } ?>
