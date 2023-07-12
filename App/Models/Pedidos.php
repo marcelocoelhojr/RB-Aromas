@@ -15,7 +15,7 @@ class Pedidos extends Conn
 
     public function __construct()
     {
-        $this->pdo = Conn::connection();
+        $this->pdo = Conn::getInstance();
     }
 
     public function __get($atributo)

@@ -8,6 +8,7 @@ use PDOException;
 
 class Produto extends Conn
 {
+    const EXCEPTION_MESSAGE = 'Houve um problema com código SQL';
 
     protected $pdo;
     private $tabela = "produto";
@@ -15,7 +16,7 @@ class Produto extends Conn
 
     public function __construct()
     {
-        $this->pdo = Conn::connection();
+        $this->pdo = Conn::getInstance();
     }
 
     public function __get($atributo)
@@ -34,17 +35,17 @@ class Produto extends Conn
             $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela");
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                    return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
@@ -56,17 +57,17 @@ class Produto extends Conn
 
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                    return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
@@ -88,11 +89,12 @@ class Produto extends Conn
                     throw new PDOException("Não foi possível inserir registros na tabela $this->tabela");
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>" . $e->getMessage() . "</div>";
         }
+
         return null;
     }
 
@@ -113,14 +115,14 @@ class Produto extends Conn
             $stmt->bindvalue(":CodProduto", $this->__get('CodProduto'), PDO::PARAM_INT);
             if ($stmt->execute()) {
                 echo "execute";
-                $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                return $result;
+                return $stmt->fetchAll(PDO::FETCH_OBJ);
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
@@ -137,18 +139,18 @@ class Produto extends Conn
                     throw new PDOException("Não foi possivel realizar a exclusão na tabela $this->tabela");
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
     public function admAtualizarProduto()
     {
         try {
-
             foreach ($this->attrib as $key => $value) {
                 $values[] = $key . '=:' . $key;
             }
@@ -168,6 +170,7 @@ class Produto extends Conn
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+
         return null;
     }
 
@@ -178,17 +181,17 @@ class Produto extends Conn
             $stmt->bindvalue(":cod", $this->__get('id', PDO::PARAM_INT));
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                   return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
@@ -210,6 +213,7 @@ class Produto extends Conn
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+
         return null;
     }
 
@@ -221,17 +225,17 @@ class Produto extends Conn
 
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                    return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
@@ -241,7 +245,6 @@ class Produto extends Conn
 
             $stmt = $this->pdo->prepare("UPDATE $this->tabela SET EstoqueQtd = '$qtd' WHERE (CodProduto = '$id')");
             echo var_dump($stmt);
-
             if ($stmt->execute($this->attrib)) {
                 if ($stmt->rowCount() > 0) {
                     return $this;
@@ -254,6 +257,7 @@ class Produto extends Conn
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+
         return null;
     }
 
@@ -267,17 +271,17 @@ class Produto extends Conn
 
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                    return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Produto não encontrado!</div>";
                 }
             } else {
-                throw new PDOException("Houve um problema com código SQL");
+                throw new PDOException(self::EXCEPTION_MESSAGE);
             }
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 }
