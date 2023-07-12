@@ -118,18 +118,6 @@ class Routes extends Boot
             'method' => 'admExecAtualizarProduto'
         );
 
-        $routes['atendimento'] = array(
-            'route' => '/atendimento',
-            'controller' => 'AtendimentoController',
-            'method' => 'atendimento'
-        );
-
-        $routes['responderMensagem'] = array(
-            'route' => '/responderMensagem',
-            'controller' => 'AtendimentoController',
-            'method' => 'responderMensagem'
-        );
-
         $routes['politicas'] = array(
             'route' => '/politicas',
             'controller' => 'SuporteController',
