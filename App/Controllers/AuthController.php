@@ -6,7 +6,6 @@ use App\Services\AuthService;
 
 class AuthController
 {
-
     /**
      * Authentication view
      *

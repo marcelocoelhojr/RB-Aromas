@@ -30,30 +30,39 @@ class CartService extends Action
     public function carrinho(): void
     {
         if (isset($_GET['acao'])) {
-            switch ($_GET['acao']) {
-                case 'add':
-                    $this->addToCart();
-                    $this->redirect("/produtos");
-                    break;
-                case 'del':
-                    $this->deleteFromCart();
-                    break;
-                case 'contar1':
-                    $this->decreaseCartItemQuantity();
-                    break;
-                case 'contar2':
-                    $this->increaseCartItemQuantity();
-                    break;
-                default:
-                    break;
-            }
+            $this->cartAction();
         }
-
         $productModel = new Produto();
         if (!empty($_SESSION['kart'])) {
             $this->dados = $this->getCartData($productModel);
         }
         $this->renderCartPage();
+    }
+
+    /**
+     * Cart action
+     *
+     * @return void
+     */
+    private function cartAction(): void
+    {
+        switch ($_GET['acao']) {
+            case 'add':
+                $this->addToCart();
+                $this->redirect("/produtos");
+                break;
+            case 'del':
+                $this->deleteFromCart();
+                break;
+            case 'contar1':
+                $this->decreaseCartItemQuantity();
+                break;
+            case 'contar2':
+                $this->increaseCartItemQuantity();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -134,7 +143,7 @@ class CartService extends Action
      * @param string $location The URL to redirect to.
      * @return void
      */
-    private function redirect($location): void
+    private function redirect(string $location): void
     {
         header("Location: $location");
         exit;
@@ -146,7 +155,7 @@ class CartService extends Action
      * @param Produto $productModel The product model.
      * @return array The cart data.
      */
-    private function getCartData($productModel): array
+    private function getCartData(Produto $productModel): array
     {
         $cartData = [];
         foreach ($_SESSION['kart'] as $id => $qtd) {
