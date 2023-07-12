@@ -7,7 +7,6 @@ use Config\Controller\Action;
 class IndexController extends Action
 {
 
-
     public function index()
     {
         $this->render("Index/index.phtml", "layoutPadrao3");

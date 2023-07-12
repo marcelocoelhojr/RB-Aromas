@@ -185,7 +185,11 @@ class Routes extends Boot
             'method' => 'pedidos'
         );
 
-
+        $routes['buscar'] = array(
+            'route' => '/buscar',
+            'controller' => 'ProdutosController',
+            'method' => 'buscar'
+        );
 
         parent::setRoutes($routes);
     }

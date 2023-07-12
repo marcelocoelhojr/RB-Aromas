@@ -8,7 +8,7 @@ use Config\Controller\Action;
 
 class PurchaseService extends Action
 {
-    protected array $dados;
+    protected $dados = null;
     protected array $prod;
 
     /**
@@ -80,6 +80,7 @@ class PurchaseService extends Action
                 $purchaseModel->__set("qtd", $_SESSION['qtd'][$i]);
                 $purchaseModel->registrarPedidos();
             }
+            unset($_SESSION['kart']);
             header("location: /pedidos");
         } else {
             $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">

@@ -19,6 +19,7 @@ class UsuariosController extends Action
     {
 
         $usuario = new Usuario();
+
         $usuario->__set("nome", $_POST['nome']);
         $usuario->__set("cpf", $_POST['cpf']);
         $usuario->__set("email", $_POST['email']);

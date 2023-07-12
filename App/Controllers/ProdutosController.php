@@ -118,4 +118,15 @@ class ProdutosController extends Action
             $this->render("Auth/login.phtml", "layoutAuth");
         }
     }
+
+    public function buscar()
+    {
+        $produto = new Produto();
+        $this->dados = $produto->buscar($_GET['busca']);
+        if ($this->dados == null) {
+            header("location: /produtos");
+        } else {
+            $this->render("Produto/busca.phtml", "layoutAuth");
+        }
+    }
 }

@@ -2,9 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\Pedidos;
-use App\Models\Produto;
-use App\Models\Auth;
 use App\Services\CartService;
 use App\Services\PurchaseService;
 use Config\Controller\Action;

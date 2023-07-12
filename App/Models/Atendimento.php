@@ -13,7 +13,7 @@
         private $attrib;
         
         public function __construct(){
-            $this->pdo = Conn::connection(); 
+            $this->pdo = Conn::connection();
         }
 
         public function __get($atributo){
@@ -52,5 +52,3 @@
        
 
     }
-
-?>

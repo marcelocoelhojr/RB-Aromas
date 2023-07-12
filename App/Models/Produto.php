@@ -67,7 +67,6 @@ class Produto extends Conn
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
-
         return null;
     }
 
@@ -122,7 +121,6 @@ class Produto extends Conn
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
-
         return null;
     }
 
@@ -150,6 +148,7 @@ class Produto extends Conn
     public function admAtualizarProduto()
     {
         try {
+
             foreach ($this->attrib as $key => $value) {
                 $values[] = $key . '=:' . $key;
             }
@@ -177,7 +176,6 @@ class Produto extends Conn
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE CodProduto = :cod");
             $stmt->bindvalue(":cod", $this->__get('id', PDO::PARAM_INT));
-
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -212,7 +210,74 @@ class Produto extends Conn
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+        return null;
+    }
 
+    public function produtoQtd($id)
+    {
+        try {
+
+            $stmt = $this->pdo->prepare("SELECT EstoqueQtd, Nome FROM $this->tabela WHERE CodProduto = $id");
+
+            if ($stmt->execute()) {
+                if ($stmt->rowCount() > 0) {
+                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+                    return $result;
+                } else {
+                    throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
+                }
+            } else {
+                throw new PDOException("Houve um problema com código SQL");
+            }
+        } catch (PDOException $e) {
+            echo "Erro: " . $e->getMessage();
+        }
+        return null;
+    }
+
+    public function alterQtd($id, $qtd)
+    {
+        try {
+
+            $stmt = $this->pdo->prepare("UPDATE $this->tabela SET EstoqueQtd = '$qtd' WHERE (CodProduto = '$id')");
+            echo var_dump($stmt);
+
+            if ($stmt->execute($this->attrib)) {
+                if ($stmt->rowCount() > 0) {
+                    return $this;
+                } else {
+                    throw new PDOException("Não foi possivel realizar a alteração na tabela $this->tabela");
+                }
+            } else {
+                throw new PDOException("Houve um problema no código SQL");
+            }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+        return null;
+    }
+
+    public function buscar($nome)
+    {
+        try {
+
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE Nome LIKE :nome");
+            $stmt->bindvalue(":nome", "%" . $nome . "%", PDO::PARAM_STR);
+
+
+            if ($stmt->execute()) {
+                if ($stmt->rowCount() > 0) {
+                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+                    return $result;
+                } else {
+                    $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Produto não encontrado!</div>";
+                }
+            } else {
+                throw new PDOException("Houve um problema com código SQL");
+            }
+        } catch (PDOException $e) {
+            echo "Erro: " . $e->getMessage();
+        }
         return null;
     }
 }
