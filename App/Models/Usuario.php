@@ -28,12 +28,13 @@ class Usuario extends Conn
         $this->attrib[$atributo] = $valor;
     }
 
-    public function createUsuario()
+    public function create()
     {
         try {
-
-            $stmt = $this->pdo->prepare("INSERT INTO $this->tabela (NOME,EMAIL,SENHA,CPF,ENDERECO, UF, CIDADE, NUM_CASA,TELEFONE, SEXO, CEP, NASCIMENTO, RG) VALUE(:nome,:email,:senha,:cpf,:endereco,:uf, :cidade,:numero, :telefone, :sexo, :cep, :nascimento, :rg)");
-
+            $stmt = $this->pdo->prepare(
+                "INSERT INTO $this->tabela (NOME,EMAIL,SENHA,CPF,ENDERECO, UF, CIDADE, NUM_CASA,TELEFONE, SEXO, CEP, NASCIMENTO, RG)
+                VALUE(:nome,:email,:senha,:cpf,:endereco,:uf, :cidade,:numero, :telefone, :sexo, :cep, :nascimento, :rg)"
+            );
             $stmt->bindvalue(":nome", $this->__get('nome', PDO::PARAM_STR));
             $stmt->bindvalue(":cpf", $this->__get('cpf', PDO::PARAM_STR));
             $stmt->bindvalue(":email", $this->__get('email', PDO::PARAM_STR));
@@ -47,7 +48,6 @@ class Usuario extends Conn
             $stmt->bindvalue(":cep", $this->__get('cep', PDO::PARAM_STR));
             $stmt->bindvalue(":nascimento", $this->__get('data', PDO::PARAM_STR));
             $stmt->bindvalue(":rg", $this->__get('rg', PDO::PARAM_STR));
-
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso</div>";

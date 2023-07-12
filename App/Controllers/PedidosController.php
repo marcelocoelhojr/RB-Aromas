@@ -4,14 +4,9 @@ namespace App\Controllers;
 
 use App\Services\CartService;
 use App\Services\PurchaseService;
-use Config\Controller\Action;
 
-class PedidosController extends Action
+class PedidosController
 {
-
-    protected $dados = null;
-
-
     public function carrinho()
     {
         $cartService = new CartService();

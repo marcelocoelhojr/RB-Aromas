@@ -3,91 +3,63 @@
 namespace App\Controllers;
 
 use App\Models\Usuario;
-use Config\Controller\Action;
+use App\Services\UserService;
 
-class UsuariosController extends Action
+class UsuariosController
 {
 
-    protected $dados = null;
-
-    public function cadastro()
+    /**
+     * Register view
+     *
+     * @return void
+     */
+    public function cadastro(): void
     {
-        $this->render("Usuario/cadastro.phtml", "layoutAuth");
+        $userService = new UserService();
+        $userService->registerView();
     }
 
-    public function registrar()
+    /**
+     * Register user
+     *
+     * @return void
+     */
+    public function registrar(): void
     {
-
-        $usuario = new Usuario();
-
-        $usuario->__set("nome", $_POST['nome']);
-        $usuario->__set("cpf", $_POST['cpf']);
-        $usuario->__set("email", $_POST['email']);
-        $usuario->__set("senha", $_POST['senha']);
-        $usuario->__set("endereco", $_POST['endereco']);
-        $usuario->__set("uf", $_POST['uf']);
-        $usuario->__set("cidade", $_POST['cidade']);
-        $usuario->__set("numero", $_POST['numero']);
-        $usuario->__set("tel", $_POST['tel']);
-        $usuario->__set("cep", $_POST['cep']);
-        $usuario->__set("sexo", $_POST['sexo']);
-        $usuario->__set("data", $_POST['data']);
-        $usuario->__set("rg", $_POST['rg']);
-        $usuario->__set("confirmarSenha", $_POST['confirmarSenha']);
-
-
-        if ($usuario->validarCadastro()) {
-            $usuario->createusuario();
-        } else {
-            $this->dados['formRetorno'] = $_POST;
-        }
-
-
-        $this->render("Usuario/cadastro.phtml", "layoutPadrao3");
+        $userService = new UserService();
+        $userService->register();
     }
 
-    public function dados()
+    /**
+     * Get user data
+     *
+     * @return void
+     */
+    public function dados(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
-            if ($_SESSION['sId'] != "admin") {
-                $user = new Usuario();
-                $user->__set("id", $_SESSION['sId']);
-                $this->dados = $user->buscarUsuario();
-                $this->render("Usuario/meusDados.phtml", "layoutAuth");
-            }
-        } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Você não possui permissão para acessar está página!</div>";
-            $this->render("Auth/login.phtml", "layoutAuth");
-        }
+        $userService = new UserService();
+        $userService->getUserData();
     }
 
-    public function alterar()
+    /**
+     * Update view
+     *
+     * @return void
+     */
+    public function alterar(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
-            if ($_SESSION['sId'] != "admin") {
-                $user = new Usuario();
-                $user->__set("id", $_SESSION['sId']);
-                $this->dados = $user->buscarUsuario();
-                $this->render("Usuario/alterarDados.phtml", "layoutAuth");
-            }
-        } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Você não possui permissão para acessar está página!</div>";
-            $this->render("Auth/login.phtml", "layoutAuth");
-        }
+        $userService = new UserService();
+        $userService->updateView();
     }
 
-    public function execAlterarDados()
+    /**
+     * Update user data
+     *
+     * @return void
+     */
+    public function execAlterarDados(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
-            if ($_SESSION['sId'] != "admin") {
-                $user = new Usuario();
-                $user->alterar($_POST['alter'], $_POST['campo']);
-                $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
-                header("location: /alterarDados");
-            }
-        } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Você não possui permissão para acessar está página!</div>";
-            $this->render("Auth/login.phtml", "layoutAuth");
-        }
+        $userService = new UserService();
+        $userService->updateUser();
     }
 }
