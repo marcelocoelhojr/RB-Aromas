@@ -2,45 +2,41 @@
 
 namespace App\Controllers;
 
-use App\Models\Usuario;
-use Config\Controller\Action;
+use App\Services\AuthService;
 
-class AuthController extends Action
+class AuthController
 {
 
-    protected $dados = null;
-
-    public function autenticar()
+    /**
+     * Authentication view
+     *
+     * @return void
+     */
+    public function autenticar(): void
     {
-        $this->render("Auth/login.phtml", "layoutAuth");
+        $authService = new AuthService();
+        $authService->autenticate();
     }
 
-    public function execAutenticar()
+     /**
+     * Authentication
+     *
+     * @return void
+     */
+    public function execAutenticar(): void
     {
-
-        $usuario = new Usuario();
-
-        $usuario->__set('cpf', $_POST['cpf']);
-        $usuario->__set('senha', $_POST['senha']);
-
-        if (count($usuario->autenticar()) == 1) {
-            $_SESSION['sId'] = $usuario->__get('cpf');
-            $_SESSION['sNome'] = $usuario->__get('nome');
-            if ($_SESSION['sId'] == "admin") {
-                header("location: /restritoadmin");
-            } else {
-                header("location: /restrito");
-            }
-        } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">CPF e/ou Senha incorreto(s)!</div>";
-            $this->dados['formRetorno'] = $_POST;
-            $this->render("Auth/login.phtml", "layoutAuth");
-        }
+        $authService = new AuthService();
+        $authService->login();
     }
 
-    public function logout()
+     /**
+     * Logout
+     *
+     * @return void
+     */
+    public function logout(): void
     {
-        session_destroy();
-        header("location: /");
+        $authService = new AuthService();
+        $authService->logout();
     }
 }
