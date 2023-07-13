@@ -44,7 +44,7 @@ class PurchaseService extends Action
                 $productModel = new Produto();
                 $prod = array();
                 $purchaseModel->__set("cpf", $_SESSION['sId']);
-                $this->dados = $purchaseModel->meusPedidos();
+                $this->dados = $purchaseModel->orders();
                 $i = 0;
                 if (isset($this->dados)) {
                     foreach ($this->dados as $valor) {
@@ -82,7 +82,7 @@ class PurchaseService extends Action
                 $purchaseModel->__set("cpf", $_SESSION['sId']);
                 $purchaseModel->__set("data", date('d/m/Y'));
                 $purchaseModel->__set("qtd", $_SESSION['qtd'][$i]);
-                $purchaseModel->registrarPedidos();
+                $purchaseModel->registerOrder();
             }
             unset($_SESSION['kart']);
             header("location: /pedidos");

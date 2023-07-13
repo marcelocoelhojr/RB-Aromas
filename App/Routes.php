@@ -9,7 +9,6 @@ class Routes extends Boot
 
     protected function initRoutes()
     {
-
         $routes['home'] = array(
             'route' => '/',
             'controller' => 'IndexController',
