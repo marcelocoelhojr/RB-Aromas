@@ -2,11 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\Produto;
-use App\Service\ProductService;
-use Config\Controller\Action;
+use App\Services\ProductService;
 
-class ProdutosController extends Action
+class ProdutosController
 {
 
     protected $dados = null;

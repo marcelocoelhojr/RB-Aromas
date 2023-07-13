@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\Models\Produto;
 use Config\Controller\Action;
 
 class ProductService extends Action
 {
+    const PERMITION_MESSAGE = "<div class=\"alert alert-danger\" role=\"alert\">
+        Você não possui permissão para acessar está página!</div>";
 
     protected $dados = null;
     protected $cad = null;
@@ -33,8 +35,7 @@ class ProductService extends Action
         if ($_SESSION['sId'] == "admin") {
             $this->render("Produto/cadastro.phtml", "layoutAdmin");
         } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
-                Você não possui permissão para acessar está página!</div>";
+            $_SESSION['msg'] = self::PERMITION_MESSAGE;
             $this->render("Auth/login.phtml", "layoutAuth");
         }
     }
@@ -50,7 +51,7 @@ class ProductService extends Action
         $productModel->__set("nome", $_POST['nome']);
         $productModel->__set("categoria", $_POST['categoria']);
         $productModel->__set("descricao", $_POST['descricao']);
-        $productModel->__set("img", $_POST['img']);
+        $productModel->__set("img", 'produto.jpeg');
         $productModel->__set("EstoqueQtd", $_POST['EstoqueQtd']);
         $productModel->__set("preco", $_POST['preco']);
         if ($productModel->validarCadastro()) {
@@ -68,19 +69,17 @@ class ProductService extends Action
      */
     public function listProducts(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
+        if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
                 $productModel = new Produto();
                 $this->dados = $productModel->readProduto();
                 $this->render("Produto/listaProduto.phtml", "layoutAdmin");
             } else {
-                $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
-                    Você não possui permissão para acessar está página!</div>";
+                $_SESSION['msg'] = self::PERMITION_MESSAGE;
                 $this->render("Auth/login.phtml", "layoutAuth");
             }
         } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
-                Você não possui permissão para acessar está página!</div>";
+            $_SESSION['msg'] = self::PERMITION_MESSAGE;
             $this->render("Auth/login.phtml", "layoutAuth");
         }
     }
@@ -92,7 +91,7 @@ class ProductService extends Action
      */
     public function delete(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
+        if (validateUser()) {
             if (isset($_POST['id'])) {
                 $productModel = new Produto();
                 $productModel->__set('CodProduto', $_POST['id']);
@@ -107,8 +106,7 @@ class ProductService extends Action
             }
             header("location: /listaprodutos");
         } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
-                Você não possui permissão para acessar está página!</div>";
+            $_SESSION['msg'] = self::PERMITION_MESSAGE;
             $this->render("Auth/login.phtml", "layoutAuth");
         }
     }
@@ -120,7 +118,7 @@ class ProductService extends Action
      */
     public function updateViewAdmin(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
+        if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
                 $productModel = new Produto();
                 $productModel->__set("id", $_POST['id']);
@@ -128,8 +126,7 @@ class ProductService extends Action
                 $this->render("Produto/atualizar.phtml", "layoutAdmin");
             }
         } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
-                Você não possui permissão para acessar está página!</div>";
+            $_SESSION['msg'] = self::PERMITION_MESSAGE;
             $this->render("Auth/login.phtml", "layoutAuth");
         }
     }
@@ -141,7 +138,7 @@ class ProductService extends Action
      */
     public function update(): void
     {
-        if (isset($_SESSION['sId']) && isset($_SESSION['sNome'])) {
+        if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
                 $productModel = new Produto();
                 echo $_POST['id'];
@@ -150,8 +147,7 @@ class ProductService extends Action
                 header("location: /listaprodutos");
             }
         } else {
-            $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
-                Você não possui permissão para acessar está página!</div>";
+            $_SESSION['msg'] = self::PERMITION_MESSAGE;
             $this->render("Auth/login.phtml", "layoutAuth");
         }
     }

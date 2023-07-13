@@ -70,6 +70,10 @@ class PurchaseService extends Action
      */
     public function checkout(): void
     {
+        if ($_SESSION['sId'] == "admin") {
+            return;
+        }
+
         if (isset($_SESSION['sId'])) {
             $purchaseModel = new Pedidos();
             $tamanho = $_POST['tamanho'];

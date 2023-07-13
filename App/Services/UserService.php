@@ -58,7 +58,7 @@ class UserService extends Action
             return;
         }
 
-        if ($this->validateUser()) {
+        if (validateUser()) {
             $userModel = new Usuario();
             $userModel->__set("id", $_SESSION['sId']);
             $this->dados = $userModel->buscarUsuario();
@@ -79,7 +79,7 @@ class UserService extends Action
             return;
         }
 
-        if ($this->validateUser()) {
+        if (validateUser()) {
             $userModel = new Usuario();
             $userModel->__set("id", $_SESSION['sId']);
             $this->dados = $userModel->buscarUsuario();
@@ -100,7 +100,7 @@ class UserService extends Action
             return;
         }
 
-        if ($this->validateUser()) {
+        if (validateUser()) {
             $user = new Usuario();
             $user->alterar($_POST['alter'], $_POST['campo']);
             $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
@@ -120,15 +120,5 @@ class UserService extends Action
         $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
             Você não possui permissão para acessar está página!</div>";
         $this->render("Auth/login.phtml", "layoutAuth");
-    }
-
-    /**
-     * Validate user
-     *
-     * @return bool
-     */
-    private function validateUser(): bool
-    {
-        return isset($_SESSION['sId']) && isset($_SESSION['sNome']) ? true : false;
     }
 }
