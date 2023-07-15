@@ -28,7 +28,7 @@ class AuthService extends Action
     {
         $userModel = new User();
         $userModel->__set('cpf', $_POST['cpf']);
-        $userModel->__set('senha', $_POST['senha']);
+        $userModel->__set('pass', $_POST['senha']);
         if (count($userModel->autenticar()) == 1) {
             $_SESSION['sId'] = $userModel->__get('cpf');
             $_SESSION['sNome'] = $userModel->__get('nome');

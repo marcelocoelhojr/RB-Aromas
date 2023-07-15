@@ -11,7 +11,7 @@ class User extends Conn implements ModelContract
 {
 
     protected $pdo;
-    private $tabela = "cliente";
+    private $tabela = "users";
     private $attrib;
 
     public function __construct()
@@ -33,25 +33,26 @@ class User extends Conn implements ModelContract
     {
         try {
             $stmt = $this->pdo->prepare(
-                "INSERT INTO $this->tabela (NOME,EMAIL,SENHA,CPF,ENDERECO, UF, CIDADE, NUM_CASA,TELEFONE, SEXO, CEP, NASCIMENTO, RG)
-                VALUE(:nome,:email,:senha,:cpf,:endereco,:uf, :cidade,:numero, :telefone, :sexo, :cep, :nascimento, :rg)"
+                "INSERT INTO $this->tabela (name, email, password, cpf, address, uf, city, number_address, phone, sex, cep, date_birth, rg)
+                VALUE(:name, :email, :password, :cpf, :address, :uf, :city, :number_address, :phone, :sex, :cep, :date_birth, :rg)"
             );
-            $stmt->bindvalue(":nome", $this->__get('nome', PDO::PARAM_STR));
+            $stmt->bindvalue(":name", $this->__get('name', PDO::PARAM_STR));
             $stmt->bindvalue(":cpf", $this->__get('cpf', PDO::PARAM_STR));
             $stmt->bindvalue(":email", $this->__get('email', PDO::PARAM_STR));
-            $stmt->bindvalue(":senha", md5($this->__get('senha', PDO::PARAM_STR)));
-            $stmt->bindvalue(":endereco", $this->__get('endereco', PDO::PARAM_STR));
+            $stmt->bindvalue(":password", md5($this->__get('password', PDO::PARAM_STR)));
+            $stmt->bindvalue(":address", $this->__get('address', PDO::PARAM_STR));
             $stmt->bindvalue(":uf", $this->__get('uf', PDO::PARAM_STR));
-            $stmt->bindvalue(":cidade", $this->__get('cidade', PDO::PARAM_STR));
-            $stmt->bindvalue(":numero", $this->__get('numero', PDO::PARAM_STR));
-            $stmt->bindvalue(":telefone", $this->__get('tel', PDO::PARAM_STR));
-            $stmt->bindvalue(":sexo", $this->__get('sexo', PDO::PARAM_STR));
+            $stmt->bindvalue(":city", $this->__get('city', PDO::PARAM_STR));
+            $stmt->bindvalue(":number_address", 202);
+            $stmt->bindvalue(":phone", $this->__get('phone', PDO::PARAM_STR));
+            $stmt->bindvalue(":sex", $this->__get('sex', PDO::PARAM_STR));
             $stmt->bindvalue(":cep", $this->__get('cep', PDO::PARAM_STR));
-            $stmt->bindvalue(":nascimento", $this->__get('data', PDO::PARAM_STR));
+            $stmt->bindvalue(":date_birth", $this->__get('date_birth', PDO::PARAM_STR));
             $stmt->bindvalue(":rg", $this->__get('rg', PDO::PARAM_STR));
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Usuário cadastrado com sucesso</div>";
+                    $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">
+                        Usuário cadastrado com sucesso</div>";
                     return $this;
                 } else {
                     throw new PDOException("Não foi possível inserir registros na tabela $this->tabela");
@@ -60,25 +61,25 @@ class User extends Conn implements ModelContract
                 throw new PDOException("Houve um problema com código SQL");
             }
         } catch (PDOException $e) {
+            print_r(json_encode([$e])); exit;
             $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>" . $e->getMessage() . "</div>";
         }
+
         return null;
     }
 
     public function autenticar()
     {
         try {
-
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE CPF = :cpf AND SENHA = :senha");
-
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE cpf = :cpf AND password = :pass");
             $stmt->bindvalue(":cpf", $this->__get('cpf', PDO::PARAM_STR));
-            $stmt->bindvalue(":senha", md5($this->__get('senha', PDO::PARAM_STR)));
+            $stmt->bindvalue(":pass", md5($this->__get('pass', PDO::PARAM_STR)));
 
             if ($stmt->execute()) {
                 $result = $stmt->fetchALL(PDO::FETCH_OBJ);
                 if ($stmt->rowCount() == 1) {
-                    $this->__set('cpf', $result[0]->CPF);
-                    $this->__set('nome', $result[0]->NOME);
+                    $this->__set('cpf', $result[0]->cpf);
+                    $this->__set('nome', $result[0]->name);
                 }
                 return $result;
             } else {
@@ -92,7 +93,7 @@ class User extends Conn implements ModelContract
 
     public function validarCadastro()
     {
-        if (strlen($this->__get('nome')) < 5) {
+        if (strlen($this->__get('name')) < 5) {
             $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Campo NOME inválido</div>";
             return false;
         }
@@ -104,12 +105,12 @@ class User extends Conn implements ModelContract
             return false;
         }
 
-        if (strlen($this->__get('senha')) < 6) {
+        if (strlen($this->__get('password')) < 6) {
             $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Sua senha precisa conter mais de 6 caracteres</div>";
             return false;
         }
 
-        if (($this->__get('senha')) != ($this->__get('confirmarSenha'))) {
+        if (($this->__get('password')) != ($this->__get('confirmarSenha'))) {
             $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">As senhas não correspondem</div>";
             return false;
         }
@@ -121,7 +122,7 @@ class User extends Conn implements ModelContract
     {
         try {
 
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE CPF = :id");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE cpf = :id");
             $stmt->bindvalue(":id", $this->__get('id', PDO::PARAM_STR));
 
             if ($stmt->execute()) {
@@ -140,20 +141,15 @@ class User extends Conn implements ModelContract
         return null;
     }
 
-    public function alterar($valor, $campo)
+    public function alterar($campo, $value): ?User
     {
         try {
-
             $id = $_SESSION['sId'];
-
-            $stmt = $this->pdo->prepare("UPDATE $this->tabela SET $campo = '$valor' WHERE (CPF = '$id')");
-            echo var_dump($stmt);
-
-
-
+            $stmt = $this->pdo->prepare("UPDATE $this->tabela SET $campo = '$value' WHERE (cpf = '$id')");
             if ($stmt->execute($this->attrib)) {
                 if ($stmt->rowCount() > 0) {
-                    $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">$campo alterado com sucesso!</div>";
+                    $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">
+                        $campo alterado com sucesso!</div>";
                     return $this;
                 } else {
                     throw new PDOException("Não foi possivel realizar a alteração na tabela $this->tabela");

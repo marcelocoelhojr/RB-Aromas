@@ -9,7 +9,7 @@ use PDOException;
 
 class SaleRequest extends Conn implements ModelContract
 {
-    private string $table = "sale_request";
+    private string $table = "sales";
     protected PDO $pdo;
     private array $attrib;
 

@@ -25,18 +25,18 @@ class UserService extends Action
     public function register(): void
     {
         $userModel = new User();
-        $userModel->__set("nome", $_POST['nome']);
+        $userModel->__set("name", $_POST['nome']);
         $userModel->__set("cpf", $_POST['cpf']);
         $userModel->__set("email", $_POST['email']);
-        $userModel->__set("senha", $_POST['senha']);
-        $userModel->__set("endereco", $_POST['endereco']);
+        $userModel->__set("password", $_POST['senha']);
+        $userModel->__set("address", $_POST['endereco']);
         $userModel->__set("uf", $_POST['uf']);
-        $userModel->__set("cidade", $_POST['cidade']);
-        $userModel->__set("numero", $_POST['numero']);
-        $userModel->__set("tel", $_POST['tel']);
+        $userModel->__set("city", $_POST['cidade']);
+        $userModel->__set("number", $_POST['numero']);
+        $userModel->__set("phone", $_POST['tel']);
         $userModel->__set("cep", $_POST['cep']);
-        $userModel->__set("sexo", $_POST['sexo']);
-        $userModel->__set("data", $_POST['data']);
+        $userModel->__set("sex", $_POST['sexo']);
+        $userModel->__set("date_birth", $_POST['data']);
         $userModel->__set("rg", $_POST['rg']);
         $userModel->__set("confirmarSenha", $_POST['confirmarSenha']);
         if ($userModel->validarCadastro()) {
@@ -102,7 +102,7 @@ class UserService extends Action
 
         if (validateUser()) {
             $user = new User();
-            $user->alterar($_POST['alter'], $_POST['campo']);
+            $user->alterar($_POST['campo'], $_POST['alter']);
             $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
             header("location: /alterarDados");
         } else {

@@ -12,7 +12,7 @@ class Product extends Conn implements ModelContract
     const EXCEPTION_MESSAGE = 'Houve um problema com código SQL';
 
     protected $pdo;
-    private $table = "product";
+    private $table = "products";
     private $attrib;
 
     public function __construct()
