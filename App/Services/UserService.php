@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Config\Controller\Action;
 
 class UserService extends Action
@@ -24,7 +24,7 @@ class UserService extends Action
      */
     public function register(): void
     {
-        $userModel = new Usuario();
+        $userModel = new User();
         $userModel->__set("nome", $_POST['nome']);
         $userModel->__set("cpf", $_POST['cpf']);
         $userModel->__set("email", $_POST['email']);
@@ -59,7 +59,7 @@ class UserService extends Action
         }
 
         if (validateUser()) {
-            $userModel = new Usuario();
+            $userModel = new User();
             $userModel->__set("id", $_SESSION['sId']);
             $this->dados = $userModel->buscarUsuario();
             $this->render("Usuario/meusDados.phtml", "layoutAuth");
@@ -80,7 +80,7 @@ class UserService extends Action
         }
 
         if (validateUser()) {
-            $userModel = new Usuario();
+            $userModel = new User();
             $userModel->__set("id", $_SESSION['sId']);
             $this->dados = $userModel->buscarUsuario();
             $this->render("Usuario/alterarDados.phtml", "layoutAuth");
@@ -101,7 +101,7 @@ class UserService extends Action
         }
 
         if (validateUser()) {
-            $user = new Usuario();
+            $user = new User();
             $user->alterar($_POST['alter'], $_POST['campo']);
             $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
             header("location: /alterarDados");

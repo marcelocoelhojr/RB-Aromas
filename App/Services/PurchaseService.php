@@ -55,6 +55,8 @@ class PurchaseService extends Action
                 }
                 $this->prod = $prod;
                 $this->render("Usuario/pedidos.phtml", "layoutUser");
+            } else {
+                print_r(json_encode(['Realize o logout para acessar essa pagina'])); exit;
             }
         } else {
             $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">

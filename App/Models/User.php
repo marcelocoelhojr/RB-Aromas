@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Conn;
+use App\Contracts\ModelContract;
 use PDO;
 use PDOException;
 
-class Usuario extends Conn
+class User extends Conn implements ModelContract
 {
 
     protected $pdo;

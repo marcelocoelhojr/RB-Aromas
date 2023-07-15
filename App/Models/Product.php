@@ -178,11 +178,15 @@ class Product extends Conn implements ModelContract
         return null;
     }
 
-    public function alterar($valor, $campo, $id)
+    /**
+     * Update product by id
+     *
+     * @return ?Product
+     */
+    public function update($valor, $campo, $id): ?Product
     {
         try {
             $stmt = $this->pdo->prepare("UPDATE $this->tabela SET $campo = '$valor' WHERE (CodProduto = '$id')");
-            echo var_dump($stmt);
             if ($stmt->execute($this->attrib)) {
                 if ($stmt->rowCount() > 0) {
                     $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">
@@ -201,56 +205,14 @@ class Product extends Conn implements ModelContract
         return null;
     }
 
-    public function produtoQtd($id)
+    /**
+     * Search product
+     */
+    public function search($nome)
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT EstoqueQtd, Nome FROM $this->tabela WHERE CodProduto = $id");
-            if ($stmt->execute()) {
-                if ($stmt->rowCount() > 0) {
-                    return $stmt->fetchAll(PDO::FETCH_OBJ);
-                } else {
-                    throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
-                }
-            } else {
-                throw new PDOException(self::EXCEPTION_MESSAGE);
-            }
-        } catch (PDOException $e) {
-            echo "Erro: " . $e->getMessage();
-        }
-
-        return null;
-    }
-
-    public function alterQtd($id, $qtd)
-    {
-        try {
-
-            $stmt = $this->pdo->prepare("UPDATE $this->tabela SET EstoqueQtd = '$qtd' WHERE (CodProduto = '$id')");
-            echo var_dump($stmt);
-            if ($stmt->execute($this->attrib)) {
-                if ($stmt->rowCount() > 0) {
-                    return $this;
-                } else {
-                    throw new PDOException("Não foi possivel realizar a alteração na tabela $this->tabela");
-                }
-            } else {
-                throw new PDOException("Houve um problema no código SQL");
-            }
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-
-        return null;
-    }
-
-    public function buscar($nome)
-    {
-        try {
-
             $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE Nome LIKE :nome");
             $stmt->bindvalue(":nome", "%" . $nome . "%", PDO::PARAM_STR);
-
-
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     return $stmt->fetchAll(PDO::FETCH_OBJ);

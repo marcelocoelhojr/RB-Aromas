@@ -142,7 +142,7 @@ class ProductService extends Action
             if ($_SESSION['sId'] == "admin") {
                 $productModel = new Product();
                 echo $_POST['id'];
-                $productModel->alterar($_POST['alter'], $_POST['campo'], $_POST['id']);
+                $productModel->update($_POST['alter'], $_POST['campo'], $_POST['id']);
                 $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
                 header("location: /listaprodutos");
             }
@@ -160,7 +160,7 @@ class ProductService extends Action
     public function search(): void
     {
         $productModel = new Product();
-        $this->dados = $productModel->buscar($_GET['busca']);
+        $this->dados = $productModel->search($_GET['busca']);
         if ($this->dados == null) {
             header("location: /produtos");
         } else {

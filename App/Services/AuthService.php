@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Usuario;
+use App\Models\User;
 use Config\Controller\Action;
 
 class AuthService extends Action
@@ -26,7 +26,7 @@ class AuthService extends Action
      */
     public function login(): void
     {
-        $userModel = new Usuario();
+        $userModel = new User();
         $userModel->__set('cpf', $_POST['cpf']);
         $userModel->__set('senha', $_POST['senha']);
         if (count($userModel->autenticar()) == 1) {
