@@ -12,7 +12,7 @@ class Product extends Conn implements ModelContract
     const EXCEPTION_MESSAGE = 'Houve um problema com código SQL';
 
     protected $pdo;
-    private $tabela = "product";
+    private $table = "product";
     private $attrib;
 
     public function __construct()
@@ -42,12 +42,12 @@ class Product extends Conn implements ModelContract
     public function listProduct()
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table");
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
-                    throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
+                    throw new PDOException("Não foram encontrados registros na tabela $this->table");
                 }
             } else {
                 throw new PDOException(self::EXCEPTION_MESSAGE);
@@ -65,13 +65,13 @@ class Product extends Conn implements ModelContract
     public function listCart($id)
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE CodProduto = :id");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE CodProduto = :id");
             $stmt->bindvalue(":id", $id, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
-                    throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
+                    throw new PDOException("Não foram encontrados registros na tabela $this->table");
                 }
             } else {
                 throw new PDOException(self::EXCEPTION_MESSAGE);
@@ -92,7 +92,7 @@ class Product extends Conn implements ModelContract
     {
         try {
             $stmt = $this->pdo->prepare(
-                "INSERT INTO $this->tabela (Nome,Preco,Descricao,Categoria, EstoqueQtd,Imagem)
+                "INSERT INTO $this->table (Nome,Preco,Descricao,Categoria, EstoqueQtd,Imagem)
                 VALUE(:nome,:preco,:descricao,:categoria,:estoque,:img)"
             );
             $stmt->bindvalue(":nome", $this->__get('nome', PDO::PARAM_STR));
@@ -107,7 +107,7 @@ class Product extends Conn implements ModelContract
                         Produto cadastrado com sucesso</div>";
                     return $this;
                 } else {
-                    throw new PDOException("Não foi possível inserir registros na tabela $this->tabela");
+                    throw new PDOException("Não foi possível inserir registros na tabela $this->table");
                 }
             } else {
                 throw new PDOException(self::EXCEPTION_MESSAGE);
@@ -136,7 +136,7 @@ class Product extends Conn implements ModelContract
     public function getProductById()
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE CodProduto=:id");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE CodProduto=:id");
             $stmt->bindvalue(":id", $this->__get('id'), PDO::PARAM_INT);
             if ($stmt->execute()) {
                 return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -158,7 +158,7 @@ class Product extends Conn implements ModelContract
     public function delete(): ?Product
     {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM $this->tabela WHERE CodProduto=:CodProduto");
+            $stmt = $this->pdo->prepare("DELETE FROM $this->table WHERE CodProduto=:CodProduto");
             $stmt->bindvalue(":CodProduto", $this->__get('CodProduto'), PDO::PARAM_INT);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
@@ -166,7 +166,7 @@ class Product extends Conn implements ModelContract
                         Produto excluido com sucesso!</div>";
                     return $this;
                 } else {
-                    throw new PDOException("Não foi possivel realizar a exclusão na tabela $this->tabela");
+                    throw new PDOException("Não foi possivel realizar a exclusão na tabela $this->table");
                 }
             } else {
                 throw new PDOException(self::EXCEPTION_MESSAGE);
@@ -186,14 +186,14 @@ class Product extends Conn implements ModelContract
     public function update($valor, $campo, $id): ?Product
     {
         try {
-            $stmt = $this->pdo->prepare("UPDATE $this->tabela SET $campo = '$valor' WHERE (CodProduto = '$id')");
+            $stmt = $this->pdo->prepare("UPDATE $this->table SET $campo = '$valor' WHERE (CodProduto = '$id')");
             if ($stmt->execute($this->attrib)) {
                 if ($stmt->rowCount() > 0) {
                     $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">
                         $campo alterado com sucesso!</div>";
                     return $this;
                 } else {
-                    throw new PDOException("Não foi possivel realizar a alteração na tabela $this->tabela");
+                    throw new PDOException("Não foi possivel realizar a alteração na tabela $this->table");
                 }
             } else {
                 throw new PDOException("Houve um problema no código SQL");
@@ -211,7 +211,7 @@ class Product extends Conn implements ModelContract
     public function search($nome)
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE Nome LIKE :nome");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE Nome LIKE :nome");
             $stmt->bindvalue(":nome", "%" . $nome . "%", PDO::PARAM_STR);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
