@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Produto;
+use App\Models\Product;
 use Config\Controller\Action;
 
 class ProductService extends Action
@@ -20,8 +20,8 @@ class ProductService extends Action
      */
     public function productsView(): void
     {
-        $product = new Produto();
-        $this->dados = $product->readProduto();
+        $product = new Product();
+        $this->dados = $product->listProduct();
         $this->render("Produto/index.phtml", "layoutAuth");
     }
 
@@ -47,15 +47,15 @@ class ProductService extends Action
      */
     public function register(): void
     {
-        $productModel = new Produto();
+        $productModel = new Product();
         $productModel->__set("nome", $_POST['nome']);
         $productModel->__set("categoria", $_POST['categoria']);
         $productModel->__set("descricao", $_POST['descricao']);
         $productModel->__set("img", 'produto.jpeg');
         $productModel->__set("EstoqueQtd", $_POST['EstoqueQtd']);
         $productModel->__set("preco", $_POST['preco']);
-        if ($productModel->validarCadastro()) {
-            $productModel->createProduto();
+        if ($productModel->validate()) {
+            $productModel->create();
         } else {
             $this->cad['formRetorno'] = $_POST;
         }
@@ -71,8 +71,8 @@ class ProductService extends Action
     {
         if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
-                $productModel = new Produto();
-                $this->dados = $productModel->readProduto();
+                $productModel = new Product();
+                $this->dados = $productModel->listProduct();
                 $this->render("Produto/listaProduto.phtml", "layoutAdmin");
             } else {
                 $_SESSION['msg'] = self::PERMITION_MESSAGE;
@@ -93,10 +93,10 @@ class ProductService extends Action
     {
         if (validateUser()) {
             if (isset($_POST['id'])) {
-                $productModel = new Produto();
+                $productModel = new Product();
                 $productModel->__set('CodProduto', $_POST['id']);
                 echo $_POST['id'];
-                $productModel->excluirProduto();
+                $productModel->delete();
                 header("listaprodutos");
                 $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">
                     Produto excluido com sucesso!</div>";
@@ -120,9 +120,9 @@ class ProductService extends Action
     {
         if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
-                $productModel = new Produto();
+                $productModel = new Product();
                 $productModel->__set("id", $_POST['id']);
-                $this->dados = $productModel->selecionarProduto();
+                $this->dados = $productModel->getProductById();
                 $this->render("Produto/atualizar.phtml", "layoutAdmin");
             }
         } else {
@@ -140,7 +140,7 @@ class ProductService extends Action
     {
         if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
-                $productModel = new Produto();
+                $productModel = new Product();
                 echo $_POST['id'];
                 $productModel->alterar($_POST['alter'], $_POST['campo'], $_POST['id']);
                 $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
@@ -159,7 +159,7 @@ class ProductService extends Action
      */
     public function search(): void
     {
-        $productModel = new Produto();
+        $productModel = new Product();
         $this->dados = $productModel->buscar($_GET['busca']);
         if ($this->dados == null) {
             header("location: /produtos");

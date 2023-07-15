@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Pedidos;
-use App\Models\Produto;
+use App\Models\SaleRequest;
+use App\Models\Product;
 use Config\Controller\Action;
 
 class PurchaseService extends Action
@@ -19,10 +19,10 @@ class PurchaseService extends Action
     public function checkoutView(): void
     {
         if (isset($_GET['fim'])) {
-            $productModel = new Produto();
+            $productModel = new Product();
             $i = 0;
             foreach ($_SESSION['kart'] as $id => $qtd) {
-                $this->dados[$i] = $productModel->listaCarrinho($id);
+                $this->dados[$i] = $productModel->listCart($id);
                 $i++;
             }
             $this->render("Pedidos/finalizar.phtml", "layoutAuth");
@@ -40,8 +40,8 @@ class PurchaseService extends Action
     {
         if (isset($_SESSION['sId'])) {
             if ($_SESSION['sId'] != "admin") {
-                $purchaseModel = new Pedidos();
-                $productModel = new Produto();
+                $purchaseModel = new SaleRequest();
+                $productModel = new Product();
                 $prod = array();
                 $purchaseModel->__set("cpf", $_SESSION['sId']);
                 $this->dados = $purchaseModel->orders();
@@ -49,7 +49,7 @@ class PurchaseService extends Action
                 if (isset($this->dados)) {
                     foreach ($this->dados as $valor) {
                         $productModel->__set('id', $valor->CodProduto);
-                        $prod[$i] = $productModel->selecionarProduto();
+                        $prod[$i] = $productModel->getProductById();
                         $i++;
                     }
                 }
@@ -75,7 +75,7 @@ class PurchaseService extends Action
         }
 
         if (isset($_SESSION['sId'])) {
-            $purchaseModel = new Pedidos();
+            $purchaseModel = new SaleRequest();
             $tamanho = $_POST['tamanho'];
             for ($i = 0; $i < $tamanho; $i++) {
                 $purchaseModel->__set("id", $_SESSION['produtos'][$i]);

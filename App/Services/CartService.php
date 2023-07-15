@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Produto;
+use App\Models\Product;
 use Config\Controller\Action;
 
 class CartService extends Action
@@ -32,7 +32,7 @@ class CartService extends Action
         if (isset($_GET['acao'])) {
             $this->cartAction();
         }
-        $productModel = new Produto();
+        $productModel = new Product();
         if (!empty($_SESSION['kart'])) {
             $this->dados = $this->getCartData($productModel);
         }
@@ -152,14 +152,14 @@ class CartService extends Action
     /**
      * Retrieves the cart data.
      *
-     * @param Produto $productModel The product model.
+     * @param Product $productModel The product model.
      * @return array The cart data.
      */
-    private function getCartData(Produto $productModel): array
+    private function getCartData(Product $productModel): array
     {
         $cartData = [];
         foreach ($_SESSION['kart'] as $id => $qtd) {
-            $cartData[] = $productModel->listaCarrinho($id);
+            $cartData[] = $productModel->listCart($id);
         }
 
         return $cartData;

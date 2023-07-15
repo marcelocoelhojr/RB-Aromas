@@ -7,9 +7,9 @@ use App\Conn;
 use PDO;
 use PDOException;
 
-class Pedidos extends Conn implements ModelContract
+class SaleRequest extends Conn implements ModelContract
 {
-    private string $table = "pedidos";
+    private string $table = "sale_request";
     protected PDO $pdo;
     private array $attrib;
 
@@ -39,14 +39,14 @@ class Pedidos extends Conn implements ModelContract
      *
      * @return Pedidos
      */
-    public function registerOrder(): ?Pedidos
+    public function registerOrder(): ?SaleRequest
     {
         try {
             $this->pdo->setAttribute(PDO::MYSQL_ATTR_MULTI_STATEMENTS, true);
             $stmt = $this->pdo->prepare("
                 INSERT INTO $this->table (Status,DataPedido,CPF,CodProduto,Quantidade)
                 VALUES (:status,:data,:cpf,:cod,:qtd);
-                UPDATE Produto SET EstoqueQtd = EstoqueQtd - :qtd WHERE CodProduto = :cod;
+                UPDATE Product SET EstoqueQtd = EstoqueQtd - :qtd WHERE CodProduto = :cod;
             ");
             $stmt->bindValue(":status", "Preparando para o envio", PDO::PARAM_STR);
             $stmt->bindValue(":data", $this->__get('data'), PDO::PARAM_STR);
