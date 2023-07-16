@@ -39,7 +39,7 @@ class UserService extends Action
         $userModel->__set("date_birth", $_POST['data']);
         $userModel->__set("rg", $_POST['rg']);
         $userModel->__set("confirmarSenha", $_POST['confirmarSenha']);
-        if ($userModel->validarCadastro()) {
+        if ($userModel->validate()) {
             $userModel->create();
         } else {
             $this->dados['formRetorno'] = $_POST;
@@ -61,7 +61,7 @@ class UserService extends Action
         if (validateUser()) {
             $userModel = new User();
             $userModel->__set("id", $_SESSION['sId']);
-            $this->dados = $userModel->buscarUsuario();
+            $this->dados = $userModel->searchUser();
             $this->render("Usuario/meusDados.phtml", "layoutAuth");
         } else {
             $this->loginRedirect();
@@ -82,7 +82,7 @@ class UserService extends Action
         if (validateUser()) {
             $userModel = new User();
             $userModel->__set("id", $_SESSION['sId']);
-            $this->dados = $userModel->buscarUsuario();
+            $this->dados = $userModel->searchUser();
             $this->render("Usuario/alterarDados.phtml", "layoutAuth");
         } else {
             $this->loginRedirect();
@@ -102,7 +102,7 @@ class UserService extends Action
 
         if (validateUser()) {
             $user = new User();
-            $user->alterar($_POST['campo'], $_POST['alter']);
+            $user->update($_POST['campo'], $_POST['alter']);
             $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
             header("location: /alterarDados");
         } else {

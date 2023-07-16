@@ -19,14 +19,20 @@ class User extends Conn implements ModelContract
         $this->pdo = Conn::getInstance();
     }
 
-    public function __get($atributo)
+    /**
+     * @inheritdoc
+     */
+    public function __get(string $attribute)
     {
-        return $this->attrib[$atributo];
+        return $this->attrib[$attribute];
     }
 
-    public function __set($atributo, $valor)
+    /**
+     * @inheritdoc
+     */
+    public function __set(string $attribute, $value)
     {
-        $this->attrib[$atributo] = $valor;
+        $this->attrib[$attribute] = $value;
     }
 
     public function create()
@@ -61,20 +67,23 @@ class User extends Conn implements ModelContract
                 throw new PDOException("Houve um problema com código SQL");
             }
         } catch (PDOException $e) {
-            print_r(json_encode([$e])); exit;
+            print_r(json_encode([$e]));
+            exit;
             $_SESSION['msg'] = "<div class='alert alert-danger' role='alert'>" . $e->getMessage() . "</div>";
         }
 
         return null;
     }
 
-    public function autenticar()
+    /**
+     * Autenticate user
+     */
+    public function autenticate()
     {
         try {
             $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE cpf = :cpf AND password = :pass");
             $stmt->bindvalue(":cpf", $this->__get('cpf', PDO::PARAM_STR));
             $stmt->bindvalue(":pass", md5($this->__get('pass', PDO::PARAM_STR)));
-
             if ($stmt->execute()) {
                 $result = $stmt->fetchALL(PDO::FETCH_OBJ);
                 if ($stmt->rowCount() == 1) {
@@ -88,47 +97,51 @@ class User extends Conn implements ModelContract
         } catch (PDOException $e) {
             $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\"> ERRO </div>";
         }
+
         return null;
     }
 
-    public function validarCadastro()
+    /**
+     * Validate user creation
+     */
+    public function validate(): bool
     {
         if (strlen($this->__get('name')) < 5) {
-            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Campo NOME inválido</div>";
+            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
+                Campo NOME inválido</div>";
             return false;
         }
-
         $email = filter_var($this->__get('email'), FILTER_SANITIZE_EMAIL);
-
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Campo E-mail inválido!</div>";
+            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
+                Campo E-mail inválido!</div>";
             return false;
         }
-
         if (strlen($this->__get('password')) < 6) {
-            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">Sua senha precisa conter mais de 6 caracteres</div>";
+            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
+                Sua senha precisa conter mais de 6 caracteres</div>";
             return false;
         }
-
         if (($this->__get('password')) != ($this->__get('confirmarSenha'))) {
-            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">As senhas não correspondem</div>";
+            $_SESSION['msg'] = $_SESSION['msg'] = "<div class=\"alert alert-danger\" role=\"alert\">
+                As senhas não correspondem</div>";
             return false;
         }
 
         return true;
     }
 
-    public function buscarUsuario()
+    /**
+     * Search user by id
+     */
+    public function searchUser()
     {
         try {
-
             $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE cpf = :id");
             $stmt->bindvalue(":id", $this->__get('id', PDO::PARAM_STR));
-
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                    return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
                     throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
                 }
@@ -138,10 +151,14 @@ class User extends Conn implements ModelContract
         } catch (PDOException $e) {
             echo "Erro: " . $e->getMessage();
         }
+
         return null;
     }
 
-    public function alterar($campo, $value): ?User
+    /**
+     * Update user
+     */
+    public function update($campo, $value): ?User
     {
         try {
             $id = $_SESSION['sId'];
@@ -160,6 +177,7 @@ class User extends Conn implements ModelContract
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
+
         return null;
     }
 }

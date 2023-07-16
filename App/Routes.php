@@ -6,7 +6,6 @@ use Config\Init\Boot;
 
 class Routes extends Boot
 {
-
     protected function initRoutes()
     {
         $routes['home'] = array(
