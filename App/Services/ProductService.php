@@ -141,7 +141,6 @@ class ProductService extends Action
         if (validateUser()) {
             if ($_SESSION['sId'] == "admin") {
                 $productModel = new Product();
-                echo $_POST['id'];
                 $productModel->update($_POST['alter'], $_POST['campo'], $_POST['id']);
                 $_SESSION['msg'] = "<div class=\"alert alert-success\" role=\"alert\">Alterado com sucesso!</div>";
                 header("location: /listaprodutos");

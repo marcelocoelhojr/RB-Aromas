@@ -75,8 +75,10 @@ class CartService extends Action
         $id = intval($_GET['id']);
         if (!isset($_SESSION['kart'][$id])) {
             $_SESSION['kart'][$id] = 1;
+            $_SESSION['count'][$id] = 1;
         } else {
             $_SESSION['kart'][$id] += 1;
+            $_SESSION['count'][$id] +=1;
         }
     }
 

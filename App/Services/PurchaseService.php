@@ -48,7 +48,7 @@ class PurchaseService extends Action
                 $i = 0;
                 if (isset($this->dados)) {
                     foreach ($this->dados as $valor) {
-                        $productModel->__set('id', $valor->CodProduto);
+                        $productModel->__set('id', $valor->product_id);
                         $prod[$i] = $productModel->getProductById();
                         $i++;
                     }

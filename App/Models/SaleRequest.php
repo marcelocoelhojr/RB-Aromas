@@ -44,7 +44,7 @@ class SaleRequest extends Conn implements ModelContract
         try {
             $this->pdo->setAttribute(PDO::MYSQL_ATTR_MULTI_STATEMENTS, true);
             $stmt = $this->pdo->prepare("
-                INSERT INTO $this->table (Status, DataPedido, CPF, CodProduto, Quantidade)
+                INSERT INTO $this->table (status, date_sale, CPF, product_id, items)
                 VALUES (:status,:data,:cpf,:cod,:qtd);
                 UPDATE Products SET stock = stock - :qtd WHERE id = :cod;
             ");

@@ -199,6 +199,7 @@ class Product extends Conn implements ModelContract
                 throw new PDOException("Houve um problema no código SQL");
             }
         } catch (PDOException $e) {
+            print_r(json_encode([$e])); exit;
             echo $e->getMessage();
         }
 

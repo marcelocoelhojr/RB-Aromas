@@ -5,20 +5,20 @@
         <form name="form1" action="/admExecAtualizarProduto" method="POST">
             <input type="hidden" value="<?= $valor->id ?>" name="id">
             <div class="mb-3 Required">
-                <label for="nome">Nome</label>
-                <input type="text" name="nome" value="<?= $valor->name ?>" id="nome" required class="form-control mb-4" placeholder="Nome do produto">
+                <label for="name">Nome</label>
+                <input type="text" name="name" value="<?= $valor->name ?>" id="name" required class="form-control mb-4" placeholder="Nome do produto">
             </div>
             <div class="form-group col-md-1.5">
-                <label for="inputUF">Categoria</label>
-                <select name="categoria" id="inputUF" value="<?= $valor->category ?>" class="form-control mb-4" aria-placeholder="UF">
+                <label for="category">Categoria</label>
+                <select name="category" id="category" value="<?= $valor->category ?>" class="form-control mb-4" aria-placeholder="UF">
                     <option selected>Categoria1</option>
                     <option selected>Categoria2</option>
                     <option selected>Categoria3</option>
                 </select>
             </div>
             <div class="form-group Required">
-                <label for="descricao">Descrição</label>
-                <textarea name="descricao" id="descricao" value="asd" Required class="form-control mb-5" placeholder="Insira a descrição do produto"></textarea>
+                <label for="description">Descrição</label>
+                <textarea name="description" id="description" value="asd" Required class="form-control mb-5" placeholder="Insira a descrição do produto"></textarea>
             </div>
             <div class="form-group Required">
                 <div class="d-flex">
@@ -35,12 +35,12 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-md-2 Required">
-                    <label for="EstoqueQtd">Quantidade Estoque</label>
-                    <input type="text" name="EstoqueQtd" value="<?= $valor->stock ?>" id="EstoqueQtd" required class="form-control" placeholder="Quantidade">
+                    <label for="stock">Quantidade Estoque</label>
+                    <input type="text" name="stock" value="<?= $valor->stock ?>" id="stock" required class="form-control" placeholder="Quantidade">
                 </div>
                 <div class="form-group col-md-2 Required">
-                    <label for="preco">Preço</label>
-                    <input type="text" name="preco" value="<?= $valor->price ?>" id="preco" required class="form-control mb-5" placeholder="R$ 00,00">
+                    <label for="price">Preço</label>
+                    <input type="text" name="price" value="<?= $valor->price ?>" id="price" required class="form-control mb-5" placeholder="R$ 00,00">
                 </div>
             </div>
             <button type="submit" class="btn btn-dark mb-5 form-group">Atualizar</button>
