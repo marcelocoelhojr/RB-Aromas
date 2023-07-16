@@ -15,20 +15,27 @@ Antes de executar o sistema, certifique-se de ter os seguintes requisitos instal
 Para rodar o sistema, siga os seguintes passos:
 
 1. Clone o projeto em seu servidor web com a versão do PHP >= 7. (No caso do XAMPP, clone o projeto na pasta `htdocs`).
-2. Com o MySQL, crie a base de dados com o nome "rbaromas" e importe o arquivo "rbaromas.sql".
-3. Inicie o servidor na pasta "public" do projeto. Nesse caso, pode-se utilizar o Servidor web embutido do PHP. Por exemplo, `php -S localhost:8085`.
+2. Crie o arquivo `.env` no projeto a partir do arquivo `.env-example`.
+3. Configure as variáveis de ambiente no arquivo `.env` de acordo com as configurações do seu ambiente.
+4. Com o MySQL, crie a base de dados com o nome "rbaromas" e importe o arquivo "rbaromas.sql".
+5. Inicie o servidor na pasta "public" do projeto. Nesse caso, pode-se utilizar o Servidor web embutido do PHP. Por exemplo, `php -S localhost:8085`.
 
 ## Uso
 
 Para utilizar o sistema, siga as instruções abaixo:
 
-1. Acesse o sistema no seu navegador utilizando a URL: `http://localhost:PORTA`.
+1. Acesse o sistema no seu navegador utilizando a URL: `http://localhost:8085`.
 2. Explore as funcionalidades do e-commerce para visualizar e comprar produtos aromáticos.
 
-## Contato
+Para fins de teste, existem os seguintes usuários predefinidos:
 
-Em caso de dúvidas ou sugestões relacionadas ao projeto, entre em contato:
+- Usuário Administrador:
+  - Login: admin
+  - Senha: 123456
 
-- Nome: Marcelo Coelho
-- Email: macj.10@hotmail.com
+- Usuário Normal:
+  - CPF: 000.000.000-00
+  - Senha: 123456
+
+
 
