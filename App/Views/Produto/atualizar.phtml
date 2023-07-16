@@ -2,91 +2,88 @@
 <div class="container">
     <h3>Atualizar produto</h3>
     <hr class="mt-3">
-    <?php 
-        if(isset($_SESSION['msg'])){
-            echo $_SESSION['msg'];
-            unset($_SESSION['msg']);
-        }
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
     ?>
-    <?php 
-        foreach($this->dados as $valor){ ?>
+    <?php
+    foreach ($this->dados as $valor) { ?>
+        <div class="col-12">
             <div class="col-12">
-                <div class="col-12">
-                    <form action="/execAlterarProduto" method="POST" class="d-flex">
-                        <div class="col-1">
-                            <label for="nome" class="form-label">Nome</label>
-                        </div>
-                        <div class="col-5">
-                            <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
-                            <input type="hidden" value="NOME" name="campo">
-                            <input type="text" name="alter" id="nome" value="<?= $valor->Nome; ?>"
-                                class="form-control col-6 ml-3">
-                        </div>
-                        <div class="ml-3">
-                            <button type="submit" class="btn btn-warning ml-2">Alterar</button>
-                        </div>
-                    </form>
-                </div>
+                <form action="/execAlterarProduto" method="POST" class="d-flex">
+                    <div class="col-1">
+                        <label for="nome" class="form-label">Nome</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="hidden" value="<?= $valor->id ?>" name="id">
+                        <input type="hidden" value="NOME" name="campo">
+                        <input type="text" name="alter" id="nome" value="<?= $valor->name; ?>" class="form-control col-6 ml-3">
+                    </div>
+                    <div class="ml-3">
+                        <button type="submit" class="btn btn-warning ml-2">Alterar</button>
+                    </div>
+                </form>
             </div>
-            <hr>
+        </div>
+        <hr>
+        <div class="col-12">
             <div class="col-12">
-                <div class="col-12">
-                    <form action="/execAlterarProduto" method="POST" class="d-flex">
-                        <div class="col-1">
-                            <label for="nome" class="form-label">Descrição</label>
-                        </div>
-                        <div class="col-5">
-                            <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
-                            <input type="hidden" value="Descricao" name="campo">
-                            <input type="text" name="alter" id="descricao" value="<?= $valor->Descricao; ?>"
-                                class="form-control col-6 ml-3">
-                        </div>
-                        <div class="ml-3">
-                            <button type="submit" class="btn btn-warning ml-2">Alterar</button>
-                        </div>
-                    </form>
-                </div>
+                <form action="/execAlterarProduto" method="POST" class="d-flex">
+                    <div class="col-1">
+                        <label for="nome" class="form-label">Descrição</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="hidden" value="<?= $valor->id ?>" name="id">
+                        <input type="hidden" value="Descricao" name="campo">
+                        <input type="text" name="alter" id="descricao" value="<?= $valor->description; ?>" class="form-control col-6 ml-3">
+                    </div>
+                    <div class="ml-3">
+                        <button type="submit" class="btn btn-warning ml-2">Alterar</button>
+                    </div>
+                </form>
             </div>
-            <hr>
+        </div>
+        <hr>
+        <div class="col-12">
             <div class="col-12">
-                <div class="col-12">
-                    <form action="/execAlterarProduto" method="POST" class="d-flex">
-                        <div class="col-1">
-                            <label for="nome" class="form-label">Preço</label>
-                        </div>
-                        <div class="col-5">
-                            <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
-                            <input type="hidden" value="Preco" name="campo">
-                            <input type="text" name="alter" id="preco" value="<?= $valor->Preco; ?>"
-                                class="form-control col-6 ml-3">
-                        </div>
-                        <div class="ml-3">
-                            <button type="submit" class="btn btn-warning ml-2">Alterar</button>
-                        </div>
-                    </form>
-                </div>
+                <form action="/execAlterarProduto" method="POST" class="d-flex">
+                    <div class="col-1">
+                        <label for="nome" class="form-label">Preço</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="hidden" value="<?= $valor->id ?>" name="id">
+                        <input type="hidden" value="Preco" name="campo">
+                        <input type="text" name="alter" id="preco" value="<?= $valor->price; ?>" class="form-control col-6 ml-3">
+                    </div>
+                    <div class="ml-3">
+                        <button type="submit" class="btn btn-warning ml-2">Alterar</button>
+                    </div>
+                </form>
             </div>
-            <hr>
+        </div>
+        <hr>
+        <div class="col-12">
             <div class="col-12">
-                <div class="col-12">
-                    <form action="/execAlterarProduto" method="POST" class="d-flex">
-                        <div class="col-1">
-                            <label for="qtd" class="form-label">Quantidade</label>
-                        </div>
-                        <div class="col-5">
-                            <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
-                            <input type="hidden" value="EstoqueQtd" name="campo">
-                            <input type="text" name="alter" id="qtd" value="<?= $valor->EstoqueQtd; ?>" class="form-control col-6 ml-3 text-dark">
-                        </div>
-                        <div class="ml-3">
-                            <button type="submit" class="btn btn-warning ml-2">Alterar</button>
-                        </div>
-                    </form>
-                </div>
+                <form action="/execAlterarProduto" method="POST" class="d-flex">
+                    <div class="col-1">
+                        <label for="qtd" class="form-label">Quantidade</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="hidden" value="<?= $valor->id ?>" name="id">
+                        <input type="hidden" value="EstoqueQtd" name="campo">
+                        <input type="text" name="alter" id="qtd" value="<?= $valor->stock; ?>" class="form-control col-6 ml-3 text-dark">
+                    </div>
+                    <div class="ml-3">
+                        <button type="submit" class="btn btn-warning ml-2">Alterar</button>
+                    </div>
+                </form>
             </div>
-            <hr>
-            <div class="mt-5">
-                <a href="/listaprodutos" class="btn btn-outline-danger col-1">Voltar</a>
-            </div>
-        <?php   } ?>
+        </div>
+        <hr>
+        <div class="mt-5">
+            <a href="/listaprodutos" class="btn btn-outline-danger col-1">Voltar</a>
+        </div>
+    <?php   } ?>
 </div>

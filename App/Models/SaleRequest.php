@@ -44,9 +44,9 @@ class SaleRequest extends Conn implements ModelContract
         try {
             $this->pdo->setAttribute(PDO::MYSQL_ATTR_MULTI_STATEMENTS, true);
             $stmt = $this->pdo->prepare("
-                INSERT INTO $this->table (Status,DataPedido,CPF,CodProduto,Quantidade)
+                INSERT INTO $this->table (Status, DataPedido, CPF, CodProduto, Quantidade)
                 VALUES (:status,:data,:cpf,:cod,:qtd);
-                UPDATE Product SET EstoqueQtd = EstoqueQtd - :qtd WHERE CodProduto = :cod;
+                UPDATE Products SET stock = stock - :qtd WHERE id = :cod;
             ");
             $stmt->bindValue(":status", "Preparando para o envio", PDO::PARAM_STR);
             $stmt->bindValue(":data", $this->__get('data'), PDO::PARAM_STR);
@@ -84,8 +84,7 @@ class SaleRequest extends Conn implements ModelContract
             $stmt->bindvalue(":cpf", $this->__get('cpf', PDO::PARAM_STR));
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
-                    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    return $result;
+                    return $stmt->fetchAll(PDO::FETCH_OBJ);
                 }
             } else {
                 throw new PDOException("Houve um problema com código SQL");

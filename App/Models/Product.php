@@ -65,7 +65,7 @@ class Product extends Conn implements ModelContract
     public function listCart($id)
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE CodProduto = :id");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = :id");
             $stmt->bindvalue(":id", $id, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
@@ -92,7 +92,7 @@ class Product extends Conn implements ModelContract
     {
         try {
             $stmt = $this->pdo->prepare(
-                "INSERT INTO $this->table (Nome,Preco,Descricao,Categoria, EstoqueQtd,Imagem)
+                "INSERT INTO $this->table (name, price, description, category, stock, image)
                 VALUE(:nome,:preco,:descricao,:categoria,:estoque,:img)"
             );
             $stmt->bindvalue(":nome", $this->__get('nome', PDO::PARAM_STR));
@@ -136,7 +136,7 @@ class Product extends Conn implements ModelContract
     public function getProductById()
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE CodProduto=:id");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE id = :id");
             $stmt->bindvalue(":id", $this->__get('id'), PDO::PARAM_INT);
             if ($stmt->execute()) {
                 return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -158,8 +158,8 @@ class Product extends Conn implements ModelContract
     public function delete(): ?Product
     {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM $this->table WHERE CodProduto=:CodProduto");
-            $stmt->bindvalue(":CodProduto", $this->__get('CodProduto'), PDO::PARAM_INT);
+            $stmt = $this->pdo->prepare("DELETE FROM $this->table WHERE id = :id");
+            $stmt->bindvalue(":id", $this->__get('id'), PDO::PARAM_INT);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">
@@ -186,7 +186,7 @@ class Product extends Conn implements ModelContract
     public function update($valor, $campo, $id): ?Product
     {
         try {
-            $stmt = $this->pdo->prepare("UPDATE $this->table SET $campo = '$valor' WHERE (CodProduto = '$id')");
+            $stmt = $this->pdo->prepare("UPDATE $this->table SET $campo = '$valor' WHERE (id = '$id')");
             if ($stmt->execute($this->attrib)) {
                 if ($stmt->rowCount() > 0) {
                     $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">
@@ -211,7 +211,7 @@ class Product extends Conn implements ModelContract
     public function search($nome)
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE Nome LIKE :nome");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE name LIKE :nome");
             $stmt->bindvalue(":nome", "%" . $nome . "%", PDO::PARAM_STR);
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {

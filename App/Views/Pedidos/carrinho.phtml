@@ -23,15 +23,15 @@
             $count = count($this->dados);
             for ($i; $i < $count; $i++) {
                 foreach ($this->dados[$i] as $valor) {
-                    $id = $valor->CodProduto;
+                    $id = $valor->id;
                     if (!isset($_SESSION['count'][$id])) {
                         $_SESSION['count'][$id] = 1;
                     }
                     $qtd = intval($_SESSION['count'][$id]);
-                    $total = $total + ($valor->Preco) * $qtd;
-                    if ($valor->EstoqueQtd < $qtd) {
-                        $_SESSION['count'][$id] = $valor->EstoqueQtd;
-                        $total = $total - ($valor->Preco);
+                    $total = $total + ($valor->price) * $qtd;
+                    if ($valor->stock < $qtd) {
+                        $_SESSION['count'][$id] = $valor->stock;
+                        $total = $total - ($valor->price);
                     }
             ?>
 
@@ -39,19 +39,19 @@
                         <div class="row g-3">
                             <div class="col-4 col-md-3 col-lg-2">
                                 <a href="#">
-                                    <img src="Img/Produtos/<?= $valor->Imagem ?>" class="img-thumbnail">
+                                    <img src="Img/Produtos/<?= $valor->image ?>" class="img-thumbnail">
                                 </a>
                             </div>
                             <div class="col-8 col-md-9 col-lg-7 col-xl-7 text-left align-self-center">
                                 <h4>
                                     <b>
                                         <a href="#" class="text-decoration-none text-danger">
-                                            <?= $valor->Nome ?>
+                                            <?= $valor->name ?>
                                         </a>
                                     </b>
                                 </h4>
                                 <h4>
-                                    <small><?= $valor->Descricao ?></small>
+                                    <small><?= $valor->description ?></small>
                                 </h4>
                             </div>
                             <div class="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-8 col-lg-3 offset-lg-0  col-lx-2 align-self-center mt-3">
@@ -63,7 +63,7 @@
                                             </svg>
                                         </button>
                                         <input type="hidden" name="acao" value="contar1">
-                                        <input type="hidden" name="id" value="<?= $valor->CodProduto ?>">
+                                        <input type="hidden" name="id" value="<?= $valor->id ?>">
                                     </form>
                                     <input type="text" class="form-control text-center border border-none" name="qtd" value="<?= $_SESSION['count'][$id] ?>">
                                     <form action="/carrinho" method="GET">
@@ -73,10 +73,10 @@
                                             </svg>
                                         </button>
                                         <input type="hidden" name="acao" value="contar2">
-                                        <input type="hidden" name="id" value="<?= $valor->CodProduto ?>">
+                                        <input type="hidden" name="id" value="<?= $valor->id ?>">
                                     </form>
                                     <form action="/carrinho" method="GET">
-                                        <input type="hidden" name="id" value="<?= $valor->CodProduto ?>">
+                                        <input type="hidden" name="id" value="<?= $valor->id ?>">
                                         <input type="hidden" value="del" name="acao">
                                         <button type="submit" class="btn border border-none btn-danger" action="<?= $qtd = $qtd + 1 ?>">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -87,8 +87,8 @@
                                     </form>
                                 </div>
                                 <div class="text-right mt-2">
-                                    <small class="text-secondary">Estoque: <?= $valor->EstoqueQtd ?></small><br>
-                                    <span class="text-dark">Preco: R$ <?= $valor->Preco ?></span>
+                                    <small class="text-secondary">Estoque: <?= $valor->stock ?></small><br>
+                                    <span class="text-dark">Preco: R$ <?= $valor->price ?></span>
                                 </div>
                             </div>
                         </div>

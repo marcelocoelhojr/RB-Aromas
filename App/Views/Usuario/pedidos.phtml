@@ -1,49 +1,48 @@
 <title>Pedidos</title>
 <div class="container">
-    <?php 
-        if(isset($_SESSION['msg'])){
-            echo $_SESSION['msg'];
-            unset($_SESSION['msg']);
-        }
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
     ?>
     <h3>Pedidos</h3>
-    <hr> 
+    <hr>
     <?php
-        if(isset($this->dados)){
-            $i=0;
-            foreach($this->dados as $produto){ 
-                foreach($this->prod[$i] as $valor){
-                    $i++; ?>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item py-3 d-flex">
-                            <div class=" g-3">
-                                <div class="col-4 col-md-3 col-lg-2">
-                                    <a href="#">
-                                        <img src="Img/Produtos/<?= $valor->Imagem ?>" class="img-thumbnail">
+    if (isset($this->dados)) {
+        $i = 0;
+        foreach ($this->dados as $produto) {
+            foreach ($this->prod[$i] as $valor) {
+                $i++; ?>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item py-3 d-flex">
+                        <div class=" g-3">
+                            <div class="col-4 col-md-3 col-lg-2">
+                                <a href="#">
+                                    <img src="Img/Produtos/<?= $valor->image ?>" class="img-thumbnail">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-8 col-md-9 col-lg-7 col-xl-7 text-left align-self-center">
+                            <h4>
+                                <b>
+                                    <a href="#" class="text-decoration-none text-danger">
+                                        <?= $valor->name ?>
                                     </a>
-                                </div>
-                            </div>
-                            <div class="col-8 col-md-9 col-lg-7 col-xl-7 text-left align-self-center">
-                                <h4>
-                                    <b>
-                                        <a href="#" class="text-decoration-none text-danger">
-                                            <?= $valor->Nome ?>
-                                        </a>
-                                    </b>
-                                </h4>
-                                <p>Quantidade: <?= $produto->Quantidade ?></p>
-                                <h4>
-                                    <small class="text-success"><?= $produto->Status ?></small>
-                                </h4>
-                            </div>
-                        </li>
-                    </ul>
-            <?php }
-            } 
+                                </b>
+                            </h4>
+                            <p>Quantidade: <?= $produto->Quantidade ?></p>
+                            <h4>
+                                <small class="text-success"><?= $produto->Status ?></small>
+                            </h4>
+                        </div>
+                    </li>
+                </ul>
+        <?php }
         }
-        else{ ?>
-            <div class="d-flex justify-content-center">
-                <h1 class="text-muted">VAZIO</h1>
-            </div>   
-<?php   } ?>
+    } else { ?>
+        <div class="d-flex justify-content-center">
+            <h1 class="text-muted">VAZIO</h1>
+        </div>
+    <?php   } ?>
 </div>

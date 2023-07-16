@@ -94,7 +94,7 @@ class ProductService extends Action
         if (validateUser()) {
             if (isset($_POST['id'])) {
                 $productModel = new Product();
-                $productModel->__set('CodProduto', $_POST['id']);
+                $productModel->__set('id', $_POST['id']);
                 echo $_POST['id'];
                 $productModel->delete();
                 header("listaprodutos");

@@ -1,15 +1,14 @@
-
 <title>Alterar Produto</title>
 <div class="container">
     <h3>Produtos</h3>
     <hr class="mt-3">
-    <?php 
-        if(isset($_SESSION['msg'])){
-            echo $_SESSION['msg'];
-            unset($_SESSION['msg']);
-        } 
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
 
-?>
+    ?>
     <table class="table table-striped table-dark">
         <thead>
             <tr>
@@ -21,28 +20,28 @@
             </tr>
         </thead>
         <tbody>
-    <?php   foreach($this->dados as $valor){ ?>
+            <?php foreach ($this->dados as $valor) { ?>
                 <tr>
                     <th scope="row">#</th>
-                    <td><?= $valor->CodProduto ?></td>
-                    <td><?= $valor->Nome ?></td>
+                    <td><?= $valor->id ?></td>
+                    <td><?= $valor->name ?></td>
                     <td>
                         <form action="/admExecAtualizarProduto" method="POST">
-                            <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
+                            <input type="hidden" value="<?= $valor->id ?>" name="id">
                             <button class="btn btn-warning">Ver mais</button>
                         </form>
                     </td>
                     <td>
                         <form action="/delete" method="POST">
-                            <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
+                            <input type="hidden" value="<?= $valor->id ?>" name="id">
                             <button type="submit" class="btn btn-danger">X</button>
                         </form>
                     </td>
                 </tr>
-     <?php  } ?>
+            <?php  } ?>
         </tbody>
     </table>
     <div class="mb-5">
-        <a  href="/restritoadmin" class="btn btn-outline-danger">Voltar</a>
+        <a href="/restritoadmin" class="btn btn-outline-danger">Voltar</a>
     </div>
 </div>

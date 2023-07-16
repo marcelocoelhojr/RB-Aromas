@@ -24,23 +24,23 @@
     <?php
         foreach($this->dados as $valor){?>
             <tr>
-                <th scope="row"><?= $valor->CodProduto; ?></th>
+                <th scope="row"><?= $valor->id; ?></th>
                     <td><?= $valor->Nome; ?></td>
                     <td><?= $valor->Preco; ?></td>
                     <td><?= $valor->Descricao; ?></td>
                     <td><?= $valor->Categoria; ?></td>
                     <td>
                         <div>
-                            <a class="btn btn-outline-dark" data-toggle="modal" data-target="#<?= $valor->CodProduto?>" href="" value="<?= $valor->CodProduto?>" role="button">ver imagem</a>
+                            <a class="btn btn-outline-dark" data-toggle="modal" data-target="#<?= $valor->id?>" href="" value="<?= $valor->id?>" role="button">ver imagem</a>
                         </div>
                     </td>
                     <td>
-                        <a class="btn btn-warning" href="admAtualizarProduto?CodProduto=<?= $valor->CodProduto; ?>" role="button">Alterar</a>
-                        <a class="btn btn-danger" href="admExcluirProduto?CodProduto=<?= $valor->CodProduto; ?>" role="button">Excluir</a>
+                        <a class="btn btn-warning" href="admAtualizarProduto?id=<?= $valor->id; ?>" role="button">Alterar</a>
+                        <a class="btn btn-danger" href="admExcluirProduto?id=<?= $valor->id; ?>" role="button">Excluir</a>
                     </td>
                 </th>
             </tr>
-            <div class="modal fade" id="<?= $valor->CodProduto?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="<?= $valor->id?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">

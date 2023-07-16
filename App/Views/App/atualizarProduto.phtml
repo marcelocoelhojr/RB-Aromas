@@ -1,53 +1,52 @@
     <h1>Atualização do Produto</h1>
     <hr>
-    
-    <?php   foreach($this->dados as $valor){ ?>
-                <form name="form1" action="/admExecAtualizarProduto" method="POST">
-                    <input type="hidden" value="<?= $valor->CodProduto ?>" name="id">
-                    <div class="mb-3 Required">
-                        <label for="nome">Nome</label>
-                        <input type="text" name="nome" value="<?= $valor->Nome ?>" id="nome" required class="form-control mb-4" placeholder="Nome do produto">
+
+    <?php foreach ($this->dados as $valor) { ?>
+        <form name="form1" action="/admExecAtualizarProduto" method="POST">
+            <input type="hidden" value="<?= $valor->id ?>" name="id">
+            <div class="mb-3 Required">
+                <label for="nome">Nome</label>
+                <input type="text" name="nome" value="<?= $valor->name ?>" id="nome" required class="form-control mb-4" placeholder="Nome do produto">
+            </div>
+            <div class="form-group col-md-1.5">
+                <label for="inputUF">Categoria</label>
+                <select name="categoria" id="inputUF" value="<?= $valor->category ?>" class="form-control mb-4" aria-placeholder="UF">
+                    <option selected>Categoria1</option>
+                    <option selected>Categoria2</option>
+                    <option selected>Categoria3</option>
+                </select>
+            </div>
+            <div class="form-group Required">
+                <label for="descricao">Descrição</label>
+                <textarea name="descricao" id="descricao" value="asd" Required class="form-control mb-5" placeholder="Insira a descrição do produto"></textarea>
+            </div>
+            <div class="form-group Required">
+                <div class="d-flex">
+                    <div class="mr-5">
+                        <h6>Imagem atual:</h6>
+                        <p><?= $valor->image ?></p>
                     </div>
-                    <div class="form-group col-md-1.5">
-                        <label for="inputUF">Categoria</label>
-                        <select name="categoria" id="inputUF" value="<?= $valor->Categoria ?>" class="form-control mb-4" aria-placeholder="UF">
-                            <option selected>Categoria1</option>
-                            <option selected>Categoria2</option>
-                            <option selected>Categoria3</option>
-                        </select>
+
+                    <div class="ml-5">
+                        <label for="imagemProduto">Nova Imagem</label>
+                        <input type="file" name="img" requered value="<?= $valor->image ?>" class="form-control-file mb-5" id="imagemProduto" require>
                     </div>
-                    <div class="form-group Required">
-                        <label for="descricao">Descrição</label>
-                        <textarea name="descricao" id="descricao" value="asd" Required class="form-control mb-5" placeholder="Insira a descrição do produto"></textarea>
-                    </div>
-                    <div class="form-group Required">
-                        <div class="d-flex">
-                            <div class="mr-5">
-                                <h6>Imagem atual:</h6>
-                                <p><?= $valor->Imagem?></p>
-                            </div>
-                            
-                            <div class="ml-5">
-                                <label for="imagemProduto">Nova Imagem</label>
-                                <input type="file" name="img" requered value="<?= $valor->Imagem ?>" class="form-control-file mb-5" id="imagemProduto" require>
-                            </div>
-                        </div>    
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-md-2 Required">
-                            <label for="EstoqueQtd">Quantidade Estoque</label>
-                            <input type="text" name="EstoqueQtd" value="<?= $valor->EstoqueQtd ?>" id="EstoqueQtd" required class="form-control" placeholder="Quantidade">
-                        </div>
-                        <div class="form-group col-md-2 Required">
-                            <label for="preco">Preço</label>
-                            <input type="text" name="preco" value="<?= $valor->Preco ?>" id="preco" required class="form-control mb-5" placeholder="R$ 00,00">
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-dark mb-5 form-group">Atualizar</button>
-                    <a href="listaprodutos"><button id="voltar" type="button" class="btn btn-dark form-group mb-5">Cancelar</button></a>
-                    <input name="aux" type="hidden" value="insert">
-                    <input name="id" type="hidden" value="0">
-                </form>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2 Required">
+                    <label for="EstoqueQtd">Quantidade Estoque</label>
+                    <input type="text" name="EstoqueQtd" value="<?= $valor->stock ?>" id="EstoqueQtd" required class="form-control" placeholder="Quantidade">
+                </div>
+                <div class="form-group col-md-2 Required">
+                    <label for="preco">Preço</label>
+                    <input type="text" name="preco" value="<?= $valor->price ?>" id="preco" required class="form-control mb-5" placeholder="R$ 00,00">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark mb-5 form-group">Atualizar</button>
+            <a href="listaprodutos"><button id="voltar" type="button" class="btn btn-dark form-group mb-5">Cancelar</button></a>
+            <input name="aux" type="hidden" value="insert">
+            <input name="id" type="hidden" value="0">
+        </form>
 
     <?php   } ?>
-    
