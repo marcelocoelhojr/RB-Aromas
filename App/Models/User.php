@@ -11,7 +11,7 @@ class User extends Conn implements ModelContract
 {
 
     protected $pdo;
-    private $tabela = "users";
+    private $table = "users";
     private $attrib;
 
     public function __construct()
@@ -39,7 +39,7 @@ class User extends Conn implements ModelContract
     {
         try {
             $stmt = $this->pdo->prepare(
-                "INSERT INTO $this->tabela (name, email, password, cpf, address, uf, city, number_address, phone, sex, cep, date_birth, rg)
+                "INSERT INTO $this->table (name, email, password, cpf, address, uf, city, number_address, phone, sex, cep, date_birth, rg)
                 VALUE(:name, :email, :password, :cpf, :address, :uf, :city, :number_address, :phone, :sex, :cep, :date_birth, :rg)"
             );
             $stmt->bindvalue(":name", $this->__get('name', PDO::PARAM_STR));
@@ -61,7 +61,7 @@ class User extends Conn implements ModelContract
                         Usuário cadastrado com sucesso</div>";
                     return $this;
                 } else {
-                    throw new PDOException("Não foi possível inserir registros na tabela $this->tabela");
+                    throw new PDOException("Não foi possível inserir registros na tabela $this->table");
                 }
             } else {
                 throw new PDOException("Houve um problema com código SQL");
@@ -81,7 +81,7 @@ class User extends Conn implements ModelContract
     public function autenticate()
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE cpf = :cpf AND password = :pass");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE cpf = :cpf AND password = :pass");
             $stmt->bindvalue(":cpf", $this->__get('cpf', PDO::PARAM_STR));
             $stmt->bindvalue(":pass", md5($this->__get('pass', PDO::PARAM_STR)));
             if ($stmt->execute()) {
@@ -137,13 +137,13 @@ class User extends Conn implements ModelContract
     public function searchUser()
     {
         try {
-            $stmt = $this->pdo->prepare("SELECT * FROM $this->tabela WHERE cpf = :id");
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->table WHERE cpf = :id");
             $stmt->bindvalue(":id", $this->__get('id', PDO::PARAM_STR));
             if ($stmt->execute()) {
                 if ($stmt->rowCount() > 0) {
                     return $stmt->fetchAll(PDO::FETCH_OBJ);
                 } else {
-                    throw new PDOException("Não foram encontrados registros na tabela $this->tabela");
+                    throw new PDOException("Não foram encontrados registros na tabela $this->table");
                 }
             } else {
                 throw new PDOException("Houve um problema com código SQL");
@@ -162,14 +162,14 @@ class User extends Conn implements ModelContract
     {
         try {
             $id = $_SESSION['sId'];
-            $stmt = $this->pdo->prepare("UPDATE $this->tabela SET $campo = '$value' WHERE (cpf = '$id')");
+            $stmt = $this->pdo->prepare("UPDATE $this->table SET $campo = '$value' WHERE (cpf = '$id')");
             if ($stmt->execute($this->attrib)) {
                 if ($stmt->rowCount() > 0) {
                     $_SESSION['msg'] = "<div class=\"alert alert-succes\" role=\"alert\">
                         $campo alterado com sucesso!</div>";
                     return $this;
                 } else {
-                    throw new PDOException("Não foi possivel realizar a alteração na tabela $this->tabela");
+                    throw new PDOException("Não foi possivel realizar a alteração na tabela $this->table");
                 }
             } else {
                 throw new PDOException("Houve um problema no código SQL");
