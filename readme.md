@@ -24,7 +24,7 @@ Para rodar o sistema, siga os seguintes passos:
 
 Para utilizar o sistema, siga as instruções abaixo:
 
-1. Acesse o sistema no seu navegador utilizando a URL: `http://localhost:8085`.
+1. Acesse o sistema no seu navegador utilizando a URL: `http://localhost:PORTA`.
 2. Explore as funcionalidades do e-commerce para visualizar e comprar produtos aromáticos.
 
 Para fins de teste, existem os seguintes usuários predefinidos:
